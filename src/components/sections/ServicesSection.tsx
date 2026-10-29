@@ -83,7 +83,7 @@ const SERVICES: ServiceItem[] = [
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="relative py-28 overflow-hidden">
+    <section id="services" className="relative py-28 scroll-mt-24 overflow-hidden">
       {/* Glow elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-purpo-purple/15 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-80 h-80 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />

@@ -39,6 +39,23 @@ export default function Footer() {
     }
   };
 
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const el = document.getElementById(targetId);
+      if (el) {
+        const navOffset = 80;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: Math.max(0, targetY),
+          behavior: 'smooth',
+        });
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
   return (
     <footer className="relative bg-white dark:bg-black border-t border-zinc-200/80 dark:border-white/10 pt-20 pb-12 overflow-hidden text-zinc-600 dark:text-zinc-400 transition-colors">
       {/* Ambient background glow */}
@@ -127,32 +144,32 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-xs">
               <li>
-                <a href="#about" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#about" onClick={(e) => handleScrollTo(e, '#about')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   About PURPO
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#services" onClick={(e) => handleScrollTo(e, '#services')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Our Services
                 </a>
               </li>
               <li>
-                <a href="#work" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#work" onClick={(e) => handleScrollTo(e, '#work')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Featured 9 Videos
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#gallery" onClick={(e) => handleScrollTo(e, '#gallery')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Photography Gallery
                 </a>
               </li>
               <li>
-                <a href="#process" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#process" onClick={(e) => handleScrollTo(e, '#process')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Production Pipeline
                 </a>
               </li>
               <li>
-                <a href="#testimonials" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                <a href="#testimonials" onClick={(e) => handleScrollTo(e, '#testimonials')} className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Client Reviews
                 </a>
               </li>

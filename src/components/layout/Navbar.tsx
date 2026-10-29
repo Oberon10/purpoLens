@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, ArrowUpRight, Sparkles, Shield } from 'lucide-react';
+import { Menu, X, Sun, Moon, ArrowUpRight, Shield } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const NAV_LINKS = [
@@ -20,24 +21,66 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
+
+      // Scroll spy for highlighting active section
+      const sectionIds = ['about', 'services', 'work', 'gallery', 'process', 'testimonials', 'contact'];
+      const scrollPosition = window.scrollY + 140;
+
+      let current = '';
+      for (let i = 0; i < sectionIds.length; i++) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            current = sectionIds[i];
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
-      e.preventDefault();
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        setMobileMenuOpen(false);
+      if (pathname !== '/') {
+        // Allow default Next.js navigation to /#section if on subpages
+        return;
       }
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const el = document.getElementById(targetId);
+      if (el) {
+        const navOffset = 80;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: Math.max(0, targetY),
+          behavior: 'smooth',
+        });
+        setMobileMenuOpen(false);
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setMobileMenuOpen(false);
+      window.history.pushState(null, '', '/');
     }
   };
 
@@ -46,7 +89,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'py-3.5 glass-panel border-b border-zinc-200/80 dark:border-white/10 shadow-card'
+            ? 'py-3.5 glass-panel border-b border-zinc-200/80 dark:border-white/10 shadow-card backdrop-blur-md'
             : 'py-6 bg-transparent'
         }`}
       >
@@ -55,6 +98,7 @@ export default function Navbar() {
             {/* Brand Logo & Name */}
             <Link
               href="/"
+              onClick={handleLogoClick}
               className="flex items-center space-x-3 group cursor-pointer focus:outline-none"
             >
               <div className="relative w-10 h-10 transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(94,96,206,0.6)]">
@@ -77,17 +121,28 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-1 glass-card px-4 py-1.5 rounded-full border border-zinc-200/80 dark:border-white/10">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-xs uppercase tracking-wider text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white px-3 py-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-all duration-200 font-medium"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <nav className="hidden lg:flex items-center space-x-1 glass-card px-3 py-1.5 rounded-full border border-zinc-200/80 dark:border-white/10">
+              {NAV_LINKS.map((link) => {
+                const targetKey = link.href.substring(1);
+                const isActive = activeSection === targetKey;
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className={`relative text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full font-medium transition-all duration-200 ${
+                      isActive
+                        ? 'text-purpo-purple dark:text-purpo-cyan bg-purpo-purple/10 dark:bg-white/10 font-bold shadow-sm'
+                        : 'text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-purpo-purple dark:bg-purpo-cyan rounded-full" />
+                    )}
+                  </a>
+                );
+              })}
             </nav>
 
             {/* Right Actions */}
@@ -119,7 +174,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={(e) => handleLinkClick(e, '#contact')}
-                className="group relative inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-purpo-purple to-purpo-purple-glow text-white text-xs font-semibold tracking-wider uppercase shadow-glow hover:shadow-glow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+                className="group relative inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-purpo-purple to-purpo-purple-glow text-white text-xs font-semibold tracking-wider uppercase shadow-glow hover:shadow-glow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <span>Book a Project</span>
                 <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -155,29 +210,42 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden text-zinc-900 dark:text-white"
+            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden text-zinc-900 dark:text-white overflow-y-auto"
           >
-            <div className="flex flex-col space-y-4 pt-4">
+            <div className="flex flex-col space-y-3 pt-4">
               <span className="text-[11px] uppercase tracking-widest text-purpo-purple font-semibold">
                 Menu Navigation
               </span>
-              {NAV_LINKS.map((link, idx) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-2xl font-display font-medium text-zinc-800 dark:text-white/90 hover:text-purpo-purple dark:hover:text-purpo-cyan transition-colors"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+              {NAV_LINKS.map((link, idx) => {
+                const targetKey = link.href.substring(1);
+                const isActive = activeSection === targetKey;
+                return (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.04 }}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className={`text-2xl font-display font-medium py-1 transition-colors flex items-center justify-between ${
+                      isActive
+                        ? 'text-purpo-purple dark:text-purpo-cyan font-bold'
+                        : 'text-zinc-800 dark:text-white/90 hover:text-purpo-purple dark:hover:text-purpo-cyan'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {isActive && (
+                      <span className="text-xs px-2.5 py-0.5 rounded-full bg-purpo-purple/10 dark:bg-purpo-cyan/20 text-purpo-purple dark:text-purpo-cyan font-sans uppercase tracking-wider">
+                        Current
+                      </span>
+                    )}
+                  </motion.a>
+                );
+              })}
               <Link
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-purpo-purple flex items-center space-x-2 pt-2"
+                className="text-sm font-medium text-purpo-purple flex items-center space-x-2 pt-3 border-t border-zinc-200 dark:border-white/10"
               >
                 <Shield size={16} />
                 <span>Admin Portal (/admin)</span>

@@ -46,7 +46,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
   const displayedVideos = filteredVideos.slice(0, 9);
 
   return (
-    <section id="work" className="relative py-28 overflow-hidden bg-zinc-100/40 dark:bg-black/80 transition-colors">
+    <section id="work" className="relative py-28 scroll-mt-24 overflow-hidden bg-zinc-100/40 dark:bg-black/80 transition-colors">
       {/* Background glow ambiance */}
       <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-purpo-purple/15 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute -bottom-10 left-10 w-[400px] h-[400px] bg-purpo-cyan/10 rounded-full blur-[140px] pointer-events-none" />

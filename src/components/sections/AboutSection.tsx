@@ -7,7 +7,7 @@ import { CheckCircle2, Compass, Eye, Target, Zap, MapPin } from 'lucide-react';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-28 overflow-hidden bg-zinc-100/50 dark:bg-black/60 transition-colors">
+    <section id="about" className="relative py-28 scroll-mt-24 overflow-hidden bg-zinc-100/50 dark:bg-black/60 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />

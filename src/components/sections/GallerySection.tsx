@@ -29,7 +29,7 @@ export default function GallerySection({ items }: GallerySectionProps) {
   }, [items, selectedCategory]);
 
   return (
-    <section id="gallery" className="relative py-28 overflow-hidden">
+    <section id="gallery" className="relative py-28 scroll-mt-24 overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />
