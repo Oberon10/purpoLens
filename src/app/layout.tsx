@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
+import JsonLd from "@/components/seo/JsonLd";
 import "./globals.css";
 
 const inter = Inter({
@@ -104,6 +105,7 @@ export default function RootLayout({
         <link rel="icon" href="/images/purpo-logo.png" sizes="any" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased bg-black text-white min-h-screen selection:bg-purpo-purple selection:text-white`}>
+        <JsonLd />
         {children}
       </body>
     </html>

@@ -14,14 +14,14 @@ export const isSupabaseConfigured = (): boolean => {
   );
 };
 
-let supabaseInstance: SupabaseClient<Database> | null = null;
+let supabaseInstance: any = null;
 
-export const getSupabase = (): SupabaseClient<Database> | null => {
+export const getSupabase = (): any => {
   if (!isSupabaseConfigured()) {
     return null;
   }
   if (!supabaseInstance) {
-    supabaseInstance = createClient<Database>(supabaseUrl, supabaseAnonKey);
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
   }
   return supabaseInstance;
 };
@@ -56,17 +56,15 @@ export async function saveVideo(video: Omit<VideoItem, 'id' | 'created_at'> & { 
   const supabase = getSupabase();
   if (supabase) {
     if (video.id) {
-      const { data, error } = await supabase
-        .from('videos')
+      const { data, error } = await (supabase.from('videos') as any)
         .update(video)
         .eq('id', video.id)
         .select()
         .single();
       if (!error && data) return data as VideoItem;
     } else {
-      const { data, error } = await supabase
-        .from('videos')
-        .insert([video as any])
+      const { data, error } = await (supabase.from('videos') as any)
+        .insert([video])
         .select()
         .single();
       if (!error && data) return data as VideoItem;
@@ -75,7 +73,7 @@ export async function saveVideo(video: Omit<VideoItem, 'id' | 'created_at'> & { 
 
   // Fallback local update
   if (video.id) {
-    localVideos = localVideos.map((v) => (v.id === video.id ? { ...v, ...video } as VideoItem : v));
+    localVideos = localVideos.map((v) => (v.id === video.id ? ({ ...v, ...video } as VideoItem) : v));
     return localVideos.find((v) => v.id === video.id)!;
   } else {
     const newVideo: VideoItem = {
@@ -91,7 +89,7 @@ export async function saveVideo(video: Omit<VideoItem, 'id' | 'created_at'> & { 
 export async function deleteVideo(id: string): Promise<boolean> {
   const supabase = getSupabase();
   if (supabase) {
-    const { error } = await supabase.from('videos').delete().eq('id', id);
+    const { error } = await (supabase.from('videos') as any).delete().eq('id', id);
     if (!error) return true;
   }
   localVideos = localVideos.filter((v) => v.id !== id);
@@ -121,17 +119,15 @@ export async function saveGalleryItem(item: Omit<GalleryItem, 'id' | 'created_at
   const supabase = getSupabase();
   if (supabase) {
     if (item.id) {
-      const { data, error } = await supabase
-        .from('gallery')
+      const { data, error } = await (supabase.from('gallery') as any)
         .update(item)
         .eq('id', item.id)
         .select()
         .single();
       if (!error && data) return data as GalleryItem;
     } else {
-      const { data, error } = await supabase
-        .from('gallery')
-        .insert([item as any])
+      const { data, error } = await (supabase.from('gallery') as any)
+        .insert([item])
         .select()
         .single();
       if (!error && data) return data as GalleryItem;
@@ -139,7 +135,7 @@ export async function saveGalleryItem(item: Omit<GalleryItem, 'id' | 'created_at
   }
 
   if (item.id) {
-    localGallery = localGallery.map((g) => (g.id === item.id ? { ...g, ...item } as GalleryItem : g));
+    localGallery = localGallery.map((g) => (g.id === item.id ? ({ ...g, ...item } as GalleryItem) : g));
     return localGallery.find((g) => g.id === item.id)!;
   } else {
     const newItem: GalleryItem = {
@@ -155,7 +151,7 @@ export async function saveGalleryItem(item: Omit<GalleryItem, 'id' | 'created_at
 export async function deleteGalleryItem(id: string): Promise<boolean> {
   const supabase = getSupabase();
   if (supabase) {
-    const { error } = await supabase.from('gallery').delete().eq('id', id);
+    const { error } = await (supabase.from('gallery') as any).delete().eq('id', id);
     if (!error) return true;
   }
   localGallery = localGallery.filter((g) => g.id !== id);
