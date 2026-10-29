@@ -15,20 +15,17 @@ import {
   Edit2,
   ArrowUp,
   ArrowDown,
-  ExternalLink,
   LogOut,
-  Upload,
   CheckCircle,
   AlertCircle,
-  Eye,
   Film,
-  Sparkles,
   Phone,
   Mail,
   Home,
-  Database,
-  Layers,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { useTheme } from '@/components/layout/ThemeProvider';
 import {
   getVideos,
   saveVideo,
@@ -54,6 +51,7 @@ type AdminTab = 'overview' | 'videos' | 'gallery' | 'messages' | 'testimonials';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
   const [isReady, setIsReady] = useState(false);
 
@@ -146,7 +144,7 @@ export default function AdminDashboardPage() {
     }
 
     try {
-      const saved = await saveVideo({
+      await saveVideo({
         ...editingVideo,
         video_url: finalVideoUrl,
         thumbnail_url: finalThumbUrl,
@@ -160,7 +158,7 @@ export default function AdminDashboardPage() {
       setVideoFile(null);
       setThumbFile(null);
       showToast('Video successfully saved!');
-    } catch (err) {
+    } catch {
       showToast('Failed to save video', 'error');
     } finally {
       setUploading(false);
@@ -249,44 +247,58 @@ export default function AdminDashboardPage() {
   const featuredVideoCount = videos.filter((v) => v.featured).length;
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-zinc-900 dark:bg-black dark:text-white flex flex-col transition-colors">
       {/* Top Admin Bar */}
-      <header className="glass-panel border-b border-white/10 py-4 px-6 sticky top-0 z-30 flex items-center justify-between">
+      <header className="glass-panel border-b border-zinc-200/80 dark:border-white/10 py-4 px-6 sticky top-0 z-30 flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Link href="/" className="relative w-9 h-9 drop-shadow-[0_0_15px_rgba(94,96,206,0.6)]">
             <Image src="/images/purpo-logo.png" alt="PURPO" fill className="object-contain" />
           </Link>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-display font-black tracking-widest text-lg uppercase text-white">
+              <span className="font-display font-black tracking-widest text-lg uppercase text-zinc-900 dark:text-white">
                 PURPO
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-purpo-purple/20 text-purpo-purple border border-purpo-purple/30">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30">
                 CMS Admin
               </span>
             </div>
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
               Creative Studio Content Management • Lagos, NG
             </p>
           </div>
         </div>
 
-        {/* Database Status indicator */}
-        <div className="flex items-center space-x-4">
-          <div className="hidden sm:flex items-center space-x-2 text-xs px-3 py-1.5 rounded-full glass-card border border-white/10">
+        {/* Database Status indicator & Actions */}
+        <div className="flex items-center space-x-3">
+          <div className="hidden sm:flex items-center space-x-2 text-xs px-3 py-1.5 rounded-full glass-card border border-zinc-200/80 dark:border-white/10">
             <span
               className={`w-2 h-2 rounded-full ${
-                isSupabaseConfigured() ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
+                isSupabaseConfigured() ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
               }`}
             />
-            <span className="text-zinc-300">
+            <span className="text-zinc-700 dark:text-zinc-300 font-medium">
               {isSupabaseConfigured() ? 'Supabase Live Connected' : 'Local Demo Storage Active'}
             </span>
           </div>
 
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-full flex items-center justify-center glass-panel border border-zinc-200/80 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:border-purpo-purple transition-colors cursor-pointer"
+            aria-label="Toggle Theme"
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun size={16} className="text-amber-400" />
+            ) : (
+              <Moon size={16} className="text-purpo-purple" />
+            )}
+          </button>
+
           <Link
             href="/"
-            className="hidden sm:flex items-center space-x-1.5 text-xs text-zinc-300 hover:text-white px-3 py-1.5 rounded-full glass-card border border-white/10 hover:border-purpo-purple transition-colors"
+            className="hidden sm:flex items-center space-x-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-purpo-purple dark:hover:text-white px-3 py-1.5 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 hover:border-purpo-purple transition-colors"
           >
             <Home size={13} />
             <span>View Website</span>
@@ -294,7 +306,7 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-1.5 text-xs text-red-400 hover:text-red-300 px-3 py-1.5 rounded-full glass-card border border-red-500/20 hover:bg-red-500/10 transition-colors"
+            className="flex items-center space-x-1.5 text-xs text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 px-3 py-1.5 rounded-full glass-card border border-red-500/20 hover:bg-red-500/10 transition-colors cursor-pointer font-medium"
           >
             <LogOut size={13} />
             <span>Sign Out</span>
@@ -309,10 +321,10 @@ export default function AdminDashboardPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed top-20 right-6 z-50 px-4 py-3 rounded-2xl shadow-card border flex items-center space-x-2 text-xs font-medium ${
+            className={`fixed top-20 right-6 z-50 px-4 py-3 rounded-2xl shadow-card border flex items-center space-x-2 text-xs font-semibold ${
               statusMsg.type === 'success'
-                ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/30'
-                : 'bg-red-950/90 text-red-300 border-red-500/30'
+                ? 'bg-emerald-50 dark:bg-emerald-950/90 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30'
+                : 'bg-red-50 dark:bg-red-950/90 text-red-700 dark:text-red-300 border-red-300 dark:border-red-500/30'
             }`}
           >
             {statusMsg.type === 'success' ? (
@@ -327,37 +339,37 @@ export default function AdminDashboardPage() {
 
       <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
         {/* Navigation Tabs */}
-        <div className="flex items-center space-x-2 overflow-x-auto pb-4 mb-8 border-b border-white/10 scrollbar-none">
+        <div className="flex items-center space-x-2 overflow-x-auto pb-4 mb-8 border-b border-zinc-200/80 dark:border-white/10 scrollbar-none">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
               activeTab === 'overview'
                 ? 'bg-purpo-purple text-white shadow-glow'
-                : 'text-zinc-400 hover:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             Overview
           </button>
           <button
             onClick={() => setActiveTab('videos')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors flex items-center space-x-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center space-x-2 cursor-pointer ${
               activeTab === 'videos'
                 ? 'bg-purpo-purple text-white shadow-glow'
-                : 'text-zinc-400 hover:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             <Video size={14} />
             <span>Videos ({videos.length})</span>
-            <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full">
+            <span className="text-[10px] bg-white/20 dark:bg-white/20 px-1.5 py-0.2 rounded-full">
               {featuredVideoCount}/9 Featured
             </span>
           </button>
           <button
             onClick={() => setActiveTab('gallery')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors flex items-center space-x-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center space-x-2 cursor-pointer ${
               activeTab === 'gallery'
                 ? 'bg-purpo-purple text-white shadow-glow'
-                : 'text-zinc-400 hover:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             <ImageIcon size={14} />
@@ -365,10 +377,10 @@ export default function AdminDashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab('messages')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors flex items-center space-x-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center space-x-2 cursor-pointer ${
               activeTab === 'messages'
                 ? 'bg-purpo-purple text-white shadow-glow'
-                : 'text-zinc-400 hover:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             <MessageSquare size={14} />
@@ -376,10 +388,10 @@ export default function AdminDashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab('testimonials')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors flex items-center space-x-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center space-x-2 cursor-pointer ${
               activeTab === 'testimonials'
                 ? 'bg-purpo-purple text-white shadow-glow'
-                : 'text-zinc-400 hover:text-white'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             <Star size={14} />
@@ -392,62 +404,62 @@ export default function AdminDashboardPage() {
           <div className="space-y-8">
             {/* Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-6 rounded-3xl glass-card border border-white/10">
+              <div className="p-6 rounded-3xl glass-card border border-zinc-200/80 dark:border-white/10">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs uppercase font-semibold text-zinc-400">Total Videos</span>
-                  <div className="w-10 h-10 rounded-2xl bg-purpo-purple/20 text-purpo-purple flex items-center justify-center">
+                  <span className="text-xs uppercase font-bold text-zinc-500 dark:text-zinc-400">Total Videos</span>
+                  <div className="w-10 h-10 rounded-2xl bg-purpo-purple/15 text-purpo-purple flex items-center justify-center">
                     <Video size={18} />
                   </div>
                 </div>
-                <div className="font-display text-3xl font-extrabold text-white">{videos.length}</div>
+                <div className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white">{videos.length}</div>
                 <div className="text-xs text-zinc-500 mt-1">Managed via Supabase</div>
               </div>
 
-              <div className="p-6 rounded-3xl glass-card border border-purpo-purple/30 bg-purpo-purple/5">
+              <div className="p-6 rounded-3xl glass-card border border-purpo-purple/40 bg-purpo-purple/5">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs uppercase font-semibold text-purpo-purple">Featured Slot Status</span>
-                  <div className="w-10 h-10 rounded-2xl bg-purpo-purple/20 text-purpo-purple flex items-center justify-center">
+                  <span className="text-xs uppercase font-bold text-purpo-purple">Featured Slot Status</span>
+                  <div className="w-10 h-10 rounded-2xl bg-purpo-purple/15 text-purpo-purple flex items-center justify-center">
                     <Film size={18} />
                   </div>
                 </div>
-                <div className="font-display text-3xl font-extrabold text-white">
+                <div className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white">
                   {featuredVideoCount} / 9
                 </div>
-                <div className="text-xs text-purpo-purple mt-1">
+                <div className="text-xs text-purpo-purple font-semibold mt-1">
                   {featuredVideoCount === 9 ? 'Full 9/9 Portfolio Grid Active' : `${9 - featuredVideoCount} featured slots remaining`}
                 </div>
               </div>
 
-              <div className="p-6 rounded-3xl glass-card border border-white/10">
+              <div className="p-6 rounded-3xl glass-card border border-zinc-200/80 dark:border-white/10">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs uppercase font-semibold text-zinc-400">Gallery Photos</span>
-                  <div className="w-10 h-10 rounded-2xl bg-purpo-cyan/20 text-purpo-cyan flex items-center justify-center">
+                  <span className="text-xs uppercase font-bold text-zinc-500 dark:text-zinc-400">Gallery Photos</span>
+                  <div className="w-10 h-10 rounded-2xl bg-purpo-cyan/20 text-purpo-purple dark:text-purpo-cyan flex items-center justify-center">
                     <ImageIcon size={18} />
                   </div>
                 </div>
-                <div className="font-display text-3xl font-extrabold text-white">{gallery.length}</div>
+                <div className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white">{gallery.length}</div>
                 <div className="text-xs text-zinc-500 mt-1">Events, Commercial, Brand</div>
               </div>
 
-              <div className="p-6 rounded-3xl glass-card border border-white/10">
+              <div className="p-6 rounded-3xl glass-card border border-zinc-200/80 dark:border-white/10">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs uppercase font-semibold text-zinc-400">Client Inquiries</span>
-                  <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <span className="text-xs uppercase font-bold text-zinc-500 dark:text-zinc-400">Client Inquiries</span>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                     <MessageSquare size={18} />
                   </div>
                 </div>
-                <div className="font-display text-3xl font-extrabold text-white">{messages.length}</div>
+                <div className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white">{messages.length}</div>
                 <div className="text-xs text-zinc-500 mt-1">From Lagos & International</div>
               </div>
             </div>
 
             {/* Quick Actions & Recent Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="glass-card p-6 sm:p-8 rounded-3xl border border-white/10">
-                <h3 className="font-display font-bold text-xl text-white mb-2">
+              <div className="glass-card p-6 sm:p-8 rounded-3xl border border-zinc-200/80 dark:border-white/10">
+                <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
                   Quick Actions
                 </h3>
-                <p className="text-xs text-zinc-400 mb-6">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-6">
                   Add content directly into the live PURPO portfolio website.
                 </p>
 
@@ -457,13 +469,13 @@ export default function AdminDashboardPage() {
                       setEditingVideo({ category: 'Commercial', featured: true });
                       setShowVideoModal(true);
                     }}
-                    className="p-4 rounded-2xl glass-panel border border-white/10 hover:border-purpo-purple text-left transition-colors flex items-center space-x-3 group"
+                    className="p-4 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 hover:border-purpo-purple text-left transition-colors flex items-center space-x-3 group cursor-pointer"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-purpo-purple/20 text-purpo-purple flex items-center justify-center group-hover:bg-purpo-purple group-hover:text-white transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-purpo-purple/15 text-purpo-purple flex items-center justify-center group-hover:bg-purpo-purple group-hover:text-white transition-colors">
                       <Plus size={18} />
                     </div>
                     <div>
-                      <div className="text-xs font-semibold text-white">Upload New Video</div>
+                      <div className="text-xs font-bold text-zinc-900 dark:text-white">Upload New Video</div>
                       <div className="text-[11px] text-zinc-500">Add to 9-slot portfolio</div>
                     </div>
                   </button>
@@ -473,13 +485,13 @@ export default function AdminDashboardPage() {
                       setEditingGallery({ category: 'Commercial', featured: true });
                       setShowGalleryModal(true);
                     }}
-                    className="p-4 rounded-2xl glass-panel border border-white/10 hover:border-purpo-cyan text-left transition-colors flex items-center space-x-3 group"
+                    className="p-4 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 hover:border-purpo-purple text-left transition-colors flex items-center space-x-3 group cursor-pointer"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-purpo-cyan/20 text-purpo-cyan flex items-center justify-center group-hover:bg-purpo-cyan group-hover:text-black transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-purpo-purple/15 text-purpo-purple flex items-center justify-center group-hover:bg-purpo-purple group-hover:text-white transition-colors">
                       <Plus size={18} />
                     </div>
                     <div>
-                      <div className="text-xs font-semibold text-white">Add Photo to Gallery</div>
+                      <div className="text-xs font-bold text-zinc-900 dark:text-white">Add Photo to Gallery</div>
                       <div className="text-[11px] text-zinc-500">Masonry grid display</div>
                     </div>
                   </button>
@@ -487,32 +499,32 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Agency Information Card */}
-              <div className="glass-card p-6 sm:p-8 rounded-3xl border border-white/10">
-                <h3 className="font-display font-bold text-xl text-white mb-2">
+              <div className="glass-card p-6 sm:p-8 rounded-3xl border border-zinc-200/80 dark:border-white/10">
+                <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
                   PURPO Brand Coordinates
                 </h3>
-                <p className="text-xs text-zinc-400 mb-6">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-6">
                   Verified studio details displayed across customer touchpoints.
                 </p>
 
                 <div className="space-y-3 text-xs">
-                  <div className="flex justify-between py-2 border-b border-white/5">
-                    <span className="text-zinc-500">Brand Name</span>
-                    <span className="text-white font-semibold">PURPO</span>
+                  <div className="flex justify-between py-2 border-b border-zinc-200/70 dark:border-white/5">
+                    <span className="text-zinc-500 dark:text-zinc-400 font-medium">Brand Name</span>
+                    <span className="text-zinc-900 dark:text-white font-bold">PURPO</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-white/5">
-                    <span className="text-zinc-500">Hotline</span>
-                    <span className="text-white font-semibold">08133802278</span>
+                  <div className="flex justify-between py-2 border-b border-zinc-200/70 dark:border-white/5">
+                    <span className="text-zinc-500 dark:text-zinc-400 font-medium">Hotline</span>
+                    <span className="text-zinc-900 dark:text-white font-bold">08133802278</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-white/5">
-                    <span className="text-zinc-500">Studio Address</span>
-                    <span className="text-white text-right max-w-xs">
+                  <div className="flex justify-between py-2 border-b border-zinc-200/70 dark:border-white/5">
+                    <span className="text-zinc-500 dark:text-zinc-400 font-medium">Studio Address</span>
+                    <span className="text-zinc-900 dark:text-white text-right max-w-xs font-semibold">
                       27, Ijaoye Street, Jibowu, Yaba, Lagos, Nigeria
                     </span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-white/5">
-                    <span className="text-zinc-500">Storage Buckets</span>
-                    <span className="text-purpo-cyan font-mono">portfolio-videos, portfolio-images</span>
+                  <div className="flex justify-between py-2 border-b border-zinc-200/70 dark:border-white/5">
+                    <span className="text-zinc-500 dark:text-zinc-400 font-medium">Storage Buckets</span>
+                    <span className="text-purpo-purple dark:text-purpo-cyan font-mono font-semibold">portfolio-videos, portfolio-images</span>
                   </div>
                 </div>
               </div>
@@ -525,10 +537,10 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="font-display font-bold text-2xl text-white">
+                <h3 className="font-display font-bold text-2xl text-zinc-900 dark:text-white">
                   Video Management System
                 </h3>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   Manage commercial reels. Maximum exactly 9 featured videos active on the homepage grid ({featuredVideoCount}/9 currently featured).
                 </p>
               </div>
@@ -538,7 +550,7 @@ export default function AdminDashboardPage() {
                   setEditingVideo({ category: 'Commercial', featured: true });
                   setShowVideoModal(true);
                 }}
-                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-semibold uppercase tracking-wider shadow-glow transition-all"
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-bold uppercase tracking-wider shadow-glow transition-all cursor-pointer"
               >
                 <Plus size={16} />
                 <span>Upload Video</span>
@@ -550,7 +562,7 @@ export default function AdminDashboardPage() {
               {videos.map((video, idx) => (
                 <div
                   key={video.id}
-                  className="glass-card p-4 sm:p-5 rounded-2xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="glass-card p-4 sm:p-5 rounded-2xl border border-zinc-200/80 dark:border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   <div className="flex items-center space-x-4">
                     {/* Order controls */}
@@ -558,7 +570,7 @@ export default function AdminDashboardPage() {
                       <button
                         onClick={() => moveVideoOrder(idx, 'up')}
                         disabled={idx === 0}
-                        className="p-1 rounded hover:bg-white/10 text-zinc-400 hover:text-white disabled:opacity-20"
+                        className="p-1 rounded hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white disabled:opacity-20 cursor-pointer"
                         title="Move Up"
                       >
                         <ArrowUp size={14} />
@@ -566,7 +578,7 @@ export default function AdminDashboardPage() {
                       <button
                         onClick={() => moveVideoOrder(idx, 'down')}
                         disabled={idx === videos.length - 1}
-                        className="p-1 rounded hover:bg-white/10 text-zinc-400 hover:text-white disabled:opacity-20"
+                        className="p-1 rounded hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white disabled:opacity-20 cursor-pointer"
                         title="Move Down"
                       >
                         <ArrowDown size={14} />
@@ -574,7 +586,7 @@ export default function AdminDashboardPage() {
                     </div>
 
                     {/* Thumbnail preview */}
-                    <div className="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 bg-zinc-900 border border-white/10">
+                    <div className="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 bg-zinc-900 border border-zinc-200 dark:border-white/10">
                       <Image
                         src={video.thumbnail_url}
                         alt={video.title}
@@ -586,24 +598,24 @@ export default function AdminDashboardPage() {
                     {/* Info */}
                     <div>
                       <div className="flex items-center space-x-2 mb-1">
-                        <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-white/10 text-zinc-300">
+                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-zinc-300">
                           {video.category}
                         </span>
                         {video.featured ? (
-                          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-purpo-purple/20 text-purpo-purple border border-purpo-purple/30">
+                          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30">
                             ★ Featured ({idx < 9 ? `Slot 0${idx + 1}` : 'Active'})
                           </span>
                         ) : (
-                          <span className="text-[10px] text-zinc-500">Unfeatured</span>
+                          <span className="text-[10px] text-zinc-400 font-medium">Unfeatured</span>
                         )}
                         {video.client_name && (
-                          <span className="text-xs text-zinc-400">• {video.client_name}</span>
+                          <span className="text-xs text-zinc-500 dark:text-zinc-400">• {video.client_name}</span>
                         )}
                       </div>
-                      <h4 className="font-display font-semibold text-white text-sm">
+                      <h4 className="font-display font-bold text-zinc-900 dark:text-white text-sm">
                         {video.title}
                       </h4>
-                      <p className="text-xs text-zinc-400 line-clamp-1 max-w-xl">
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-1 max-w-xl">
                         {video.description}
                       </p>
                     </div>
@@ -613,10 +625,10 @@ export default function AdminDashboardPage() {
                   <div className="flex items-center space-x-2 shrink-0 self-end md:self-center">
                     <button
                       onClick={() => toggleFeaturedVideo(video)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                         video.featured
-                          ? 'bg-purpo-purple/20 text-purpo-purple border border-purpo-purple/30'
-                          : 'glass-panel text-zinc-400 hover:text-white'
+                          ? 'bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30'
+                          : 'glass-panel text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
                       }`}
                     >
                       {video.featured ? 'Unfeature' : 'Feature'}
@@ -627,7 +639,7 @@ export default function AdminDashboardPage() {
                         setEditingVideo(video);
                         setShowVideoModal(true);
                       }}
-                      className="p-2 rounded-lg glass-panel hover:bg-white/10 text-zinc-300 hover:text-white"
+                      className="p-2 rounded-lg glass-panel hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
                       title="Edit Video"
                     >
                       <Edit2 size={15} />
@@ -635,7 +647,7 @@ export default function AdminDashboardPage() {
 
                     <button
                       onClick={() => handleDeleteVideo(video.id)}
-                      className="p-2 rounded-lg glass-panel hover:bg-red-500/20 text-red-400"
+                      className="p-2 rounded-lg glass-panel hover:bg-red-500/20 text-red-500 cursor-pointer"
                       title="Delete Video"
                     >
                       <Trash2 size={15} />
@@ -652,10 +664,10 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="font-display font-bold text-2xl text-white">
+                <h3 className="font-display font-bold text-2xl text-zinc-900 dark:text-white">
                   Photography Gallery
                 </h3>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   Upload and manage high-resolution stills for the masonry portfolio.
                 </p>
               </div>
@@ -665,7 +677,7 @@ export default function AdminDashboardPage() {
                   setEditingGallery({ category: 'Commercial', featured: true });
                   setShowGalleryModal(true);
                 }}
-                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-purpo-cyan hover:bg-purpo-cyan-light text-black text-xs font-bold uppercase tracking-wider transition-all"
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-glow"
               >
                 <Plus size={16} />
                 <span>Upload Photo</span>
@@ -677,7 +689,7 @@ export default function AdminDashboardPage() {
               {gallery.map((item) => (
                 <div
                   key={item.id}
-                  className="group relative aspect-square rounded-2xl overflow-hidden glass-card border border-white/10"
+                  className="group relative aspect-square rounded-2xl overflow-hidden glass-card border border-zinc-200/80 dark:border-white/10 shadow-sm"
                 >
                   <Image
                     src={item.image_url}
@@ -685,12 +697,12 @@ export default function AdminDashboardPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-between">
-                    <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-white/20 text-white w-fit">
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-between text-white">
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-white/20 text-white w-fit">
                       {item.category}
                     </span>
                     <div>
-                      <div className="text-xs font-semibold text-white truncate mb-2">
+                      <div className="text-xs font-bold text-white truncate mb-2">
                         {item.title}
                       </div>
                       <div className="flex items-center space-x-2">
@@ -699,13 +711,13 @@ export default function AdminDashboardPage() {
                             setEditingGallery(item);
                             setShowGalleryModal(true);
                           }}
-                          className="p-1.5 rounded-md bg-white/20 text-white hover:bg-white/40"
+                          className="p-1.5 rounded-md bg-white/20 text-white hover:bg-white/40 cursor-pointer"
                         >
                           <Edit2 size={12} />
                         </button>
                         <button
                           onClick={() => handleDeleteGallery(item.id)}
-                          className="p-1.5 rounded-md bg-red-500/30 text-red-300 hover:bg-red-500/50"
+                          className="p-1.5 rounded-md bg-red-500/50 text-white hover:bg-red-500/70 cursor-pointer"
                         >
                           <Trash2 size={12} />
                         </button>
@@ -722,31 +734,31 @@ export default function AdminDashboardPage() {
         {activeTab === 'messages' && (
           <div className="space-y-6">
             <div>
-              <h3 className="font-display font-bold text-2xl text-white">
+              <h3 className="font-display font-bold text-2xl text-zinc-900 dark:text-white">
                 Client Inquiries & Project Requests
               </h3>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 Inquiries submitted through the homepage contact form. Directly reply via WhatsApp or Email.
               </p>
             </div>
 
             {messages.length === 0 ? (
-              <div className="p-12 text-center glass-card rounded-3xl border border-white/10 text-zinc-400 text-sm">
-                No inquiries submitted yet. Testing the contact form on the home page will populate messages here.
+              <div className="p-12 text-center glass-card rounded-3xl border border-zinc-200/80 dark:border-white/10 text-zinc-500 dark:text-zinc-400 text-sm">
+                No inquiries submitted yet. Submitting the contact form on the home page will populate messages here.
               </div>
             ) : (
               <div className="space-y-4">
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className="glass-card p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row md:items-start justify-between gap-6"
+                    className="glass-card p-6 rounded-2xl border border-zinc-200/80 dark:border-white/10 flex flex-col md:flex-row md:items-start justify-between gap-6"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center space-x-3">
-                        <h4 className="font-display font-bold text-lg text-white">
+                        <h4 className="font-display font-bold text-lg text-zinc-900 dark:text-white">
                           {msg.name}
                         </h4>
-                        <span className="text-xs uppercase font-semibold px-2.5 py-0.5 rounded-full bg-purpo-purple/20 text-purpo-purple border border-purpo-purple/30">
+                        <span className="text-xs uppercase font-bold px-2.5 py-0.5 rounded-full bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30">
                           {msg.service}
                         </span>
                         <span className="text-xs text-zinc-500 font-mono">
@@ -754,18 +766,18 @@ export default function AdminDashboardPage() {
                         </span>
                       </div>
 
-                      <div className="flex items-center space-x-4 text-xs text-zinc-400">
-                        <span className="flex items-center space-x-1 text-zinc-300">
-                          <Mail size={13} className="text-purpo-cyan" />
+                      <div className="flex items-center space-x-4 text-xs text-zinc-600 dark:text-zinc-400">
+                        <span className="flex items-center space-x-1 font-medium">
+                          <Mail size={13} className="text-purpo-purple" />
                           <span>{msg.email}</span>
                         </span>
-                        <span className="flex items-center space-x-1 text-zinc-300">
+                        <span className="flex items-center space-x-1 font-medium">
                           <Phone size={13} className="text-purpo-purple" />
                           <span>{msg.phone}</span>
                         </span>
                       </div>
 
-                      <p className="text-sm text-zinc-300 bg-white/5 p-4 rounded-xl border border-white/5 leading-relaxed mt-2">
+                      <p className="text-sm text-zinc-800 dark:text-zinc-300 bg-zinc-100 dark:bg-white/5 p-4 rounded-xl border border-zinc-200/70 dark:border-white/5 leading-relaxed mt-2 font-normal">
                         {msg.message}
                       </p>
                     </div>
@@ -777,14 +789,14 @@ export default function AdminDashboardPage() {
                         )},%20this%20is%20PURPO%20Creative%20Agency%20responding%20to%20your%20inquiry.`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center space-x-1.5"
+                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-1.5 shadow-sm"
                       >
                         <Phone size={13} />
                         <span>WhatsApp Reply</span>
                       </a>
                       <a
                         href={`mailto:${msg.email}?subject=PURPO%20Creative%20Agency%20-%20Project%20Inquiry`}
-                        className="px-4 py-2 rounded-xl glass-panel hover:bg-white/10 text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center space-x-1.5 border border-white/10"
+                        className="px-4 py-2 rounded-xl glass-panel hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-900 dark:text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-1.5 border border-zinc-200/80 dark:border-white/10"
                       >
                         <Mail size={13} />
                         <span>Email Reply</span>
@@ -801,34 +813,34 @@ export default function AdminDashboardPage() {
         {activeTab === 'testimonials' && (
           <div className="space-y-6">
             <div>
-              <h3 className="font-display font-bold text-2xl text-white">
+              <h3 className="font-display font-bold text-2xl text-zinc-900 dark:text-white">
                 Client Testimonials
               </h3>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 Endorsements from brands and founders featured in the homepage carousel.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {testimonials.map((test) => (
-                <div key={test.id} className="glass-card p-6 rounded-2xl border border-white/10">
+                <div key={test.id} className="glass-card p-6 rounded-2xl border border-zinc-200/80 dark:border-white/10">
                   <div className="flex items-center space-x-1 text-amber-400 mb-3">
                     {[...Array(test.rating || 5)].map((_, i) => (
                       <Star key={i} size={15} className="fill-current" />
                     ))}
                   </div>
-                  <p className="text-sm text-zinc-300 italic mb-4">
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed font-normal">
                     &ldquo;{test.review}&rdquo;
                   </p>
-                  <div className="flex items-center space-x-3 border-t border-white/10 pt-3">
+                  <div className="flex items-center space-x-3 border-t border-zinc-200/80 dark:border-white/10 pt-3">
                     {test.photo_url && (
                       <div className="relative w-10 h-10 rounded-full overflow-hidden border border-purpo-purple">
                         <Image src={test.photo_url} alt={test.name} fill className="object-cover" />
                       </div>
                     )}
                     <div>
-                      <h5 className="font-semibold text-white text-xs">{test.name}</h5>
-                      <span className="text-[11px] text-purpo-cyan">{test.company}</span>
+                      <h5 className="font-bold text-zinc-900 dark:text-white text-xs">{test.name}</h5>
+                      <span className="text-[11px] text-purpo-purple font-semibold">{test.company}</span>
                     </div>
                   </div>
                 </div>
@@ -843,17 +855,17 @@ export default function AdminDashboardPage() {
         {showVideoModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/70 backdrop-blur-md"
               onClick={() => setShowVideoModal(false)}
             />
-            <div className="relative glass-panel border border-white/15 rounded-3xl p-6 sm:p-8 max-w-xl w-full z-10 max-h-[90vh] overflow-y-auto">
-              <h3 className="font-display font-bold text-xl text-white mb-4">
+            <div className="relative bg-white dark:bg-purpo-card border border-zinc-200 dark:border-white/15 rounded-3xl p-6 sm:p-8 max-w-xl w-full z-10 max-h-[90vh] overflow-y-auto text-zinc-900 dark:text-white shadow-card">
+              <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-4">
                 {editingVideo?.id ? 'Edit Video Details' : 'Upload Video to Portfolio'}
               </h3>
 
               <form onSubmit={handleSaveVideo} className="space-y-4">
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Project Title *
                   </label>
                   <input
@@ -864,13 +876,13 @@ export default function AdminDashboardPage() {
                       setEditingVideo({ ...editingVideo, title: e.target.value })
                     }
                     placeholder="e.g. The Lagos Renaissance | Commercial Film"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                    <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                       Category *
                     </label>
                     <select
@@ -881,7 +893,7 @@ export default function AdminDashboardPage() {
                           category: e.target.value as VideoCategory,
                         })
                       }
-                      className="w-full px-3 py-2.5 rounded-xl bg-purpo-surface border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple"
+                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-purpo-surface border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
                     >
                       <option value="Commercial">Commercial</option>
                       <option value="Music Video">Music Video</option>
@@ -893,7 +905,7 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                    <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                       Client Name
                     </label>
                     <input
@@ -903,13 +915,13 @@ export default function AdminDashboardPage() {
                         setEditingVideo({ ...editingVideo, client_name: e.target.value })
                       }
                       placeholder="e.g. Heritage Luxury"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Video URL or Upload File (Supabase Storage)
                   </label>
                   <input
@@ -919,18 +931,18 @@ export default function AdminDashboardPage() {
                       setEditingVideo({ ...editingVideo, video_url: e.target.value })
                     }
                     placeholder="https://...mp4 or YouTube / Vimeo link"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple mb-2"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple mb-2 shadow-sm"
                   />
                   <input
                     type="file"
                     accept="video/*"
                     onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
-                    className="text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/20 file:text-purpo-purple"
+                    className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Thumbnail Image URL or Upload Image
                   </label>
                   <input
@@ -940,18 +952,18 @@ export default function AdminDashboardPage() {
                       setEditingVideo({ ...editingVideo, thumbnail_url: e.target.value })
                     }
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple mb-2"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple mb-2 shadow-sm"
                   />
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setThumbFile(e.target.files?.[0] || null)}
-                    className="text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/20 file:text-purpo-purple"
+                    className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Description
                   </label>
                   <textarea
@@ -961,7 +973,7 @@ export default function AdminDashboardPage() {
                       setEditingVideo({ ...editingVideo, description: e.target.value })
                     }
                     placeholder="Behind the scenes details, camera equipment, concept..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple resize-none shadow-sm"
                   />
                 </div>
 
@@ -973,25 +985,25 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setEditingVideo({ ...editingVideo, featured: e.target.checked })
                     }
-                    className="w-4 h-4 rounded text-purpo-purple focus:ring-purpo-purple bg-zinc-900 border-zinc-700"
+                    className="w-4 h-4 rounded text-purpo-purple focus:ring-purpo-purple bg-zinc-100 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700"
                   />
-                  <label htmlFor="featuredCheckbox" className="text-xs text-zinc-300">
+                  <label htmlFor="featuredCheckbox" className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">
                     Mark as Featured Video (Maximum 9 displayed on homepage)
                   </label>
                 </div>
 
-                <div className="flex items-center justify-end space-x-3 pt-4 border-t border-white/10">
+                <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-200 dark:border-white/10">
                   <button
                     type="button"
                     onClick={() => setShowVideoModal(false)}
-                    className="px-4 py-2 rounded-full text-xs text-zinc-400 hover:text-white"
+                    className="px-4 py-2 rounded-full text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white cursor-pointer font-medium"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="px-6 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-semibold uppercase tracking-wider disabled:opacity-50"
+                    className="px-6 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-bold uppercase tracking-wider disabled:opacity-50 cursor-pointer shadow-glow"
                   >
                     {uploading ? 'Processing...' : 'Save Video'}
                   </button>
@@ -1007,17 +1019,17 @@ export default function AdminDashboardPage() {
         {showGalleryModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/70 backdrop-blur-md"
               onClick={() => setShowGalleryModal(false)}
             />
-            <div className="relative glass-panel border border-white/15 rounded-3xl p-6 sm:p-8 max-w-xl w-full z-10">
-              <h3 className="font-display font-bold text-xl text-white mb-4">
+            <div className="relative bg-white dark:bg-purpo-card border border-zinc-200 dark:border-white/15 rounded-3xl p-6 sm:p-8 max-w-xl w-full z-10 text-zinc-900 dark:text-white shadow-card">
+              <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-4">
                 {editingGallery?.id ? 'Edit Photography Item' : 'Add Image to Gallery'}
               </h3>
 
               <form onSubmit={handleSaveGallery} className="space-y-4">
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Image Title *
                   </label>
                   <input
@@ -1028,12 +1040,12 @@ export default function AdminDashboardPage() {
                       setEditingGallery({ ...editingGallery, title: e.target.value })
                     }
                     placeholder="e.g. Midnight Runway Haute Couture"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Category *
                   </label>
                   <select
@@ -1044,7 +1056,7 @@ export default function AdminDashboardPage() {
                         category: e.target.value as GalleryCategory,
                       })
                     }
-                    className="w-full px-3 py-2.5 rounded-xl bg-purpo-surface border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-purpo-surface border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
                   >
                     <option value="Commercial">Commercial</option>
                     <option value="Events">Events</option>
@@ -1054,7 +1066,7 @@ export default function AdminDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-300 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                     Image URL or Upload from Device
                   </label>
                   <input
@@ -1064,28 +1076,28 @@ export default function AdminDashboardPage() {
                       setEditingGallery({ ...editingGallery, image_url: e.target.value })
                     }
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-purpo-purple mb-2"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple mb-2 shadow-sm"
                   />
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setGalleryFile(e.target.files?.[0] || null)}
-                    className="text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-cyan/20 file:text-purpo-cyan"
+                    className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold"
                   />
                 </div>
 
-                <div className="flex items-center justify-end space-x-3 pt-4 border-t border-white/10">
+                <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-200 dark:border-white/10">
                   <button
                     type="button"
                     onClick={() => setShowGalleryModal(false)}
-                    className="px-4 py-2 rounded-full text-xs text-zinc-400 hover:text-white"
+                    className="px-4 py-2 rounded-full text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white cursor-pointer font-medium"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="px-6 py-2.5 rounded-full bg-purpo-cyan hover:bg-purpo-cyan-light text-black text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+                    className="px-6 py-2.5 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white text-xs font-bold uppercase tracking-wider disabled:opacity-50 cursor-pointer shadow-glow"
                   >
                     {uploading ? 'Uploading...' : 'Save Image'}
                   </button>

@@ -60,7 +60,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-28 overflow-hidden bg-black/90">
+    <section id="contact" className="relative py-28 overflow-hidden bg-zinc-100/60 dark:bg-black/90 transition-colors">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purpo-purple/20 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-purpo-cyan/15 rounded-full blur-[140px] pointer-events-none" />
@@ -68,17 +68,17 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
             <Mail size={13} />
             <span>Initiate Collaboration</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6">
             Let&apos;s Build Something{' '}
             <span className="bg-gradient-to-r from-purpo-purple via-purpo-purple-light to-purpo-cyan bg-clip-text text-transparent">
               Iconic Together
             </span>
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed font-normal dark:font-light">
             Whether launching a commercial film, revamping your social video strategy, or commissioning brand consulting in Lagos or worldwide.
           </p>
         </div>
@@ -90,34 +90,34 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-5 glass-card border border-white/15 rounded-3xl p-8 sm:p-10 shadow-card"
+            className="lg:col-span-5 glass-card border border-zinc-200/80 dark:border-white/15 rounded-3xl p-8 sm:p-10 shadow-card"
           >
-            <div className="inline-flex items-center space-x-2 text-purpo-cyan text-xs uppercase tracking-widest font-semibold mb-3">
+            <div className="inline-flex items-center space-x-2 text-purpo-purple dark:text-purpo-cyan text-xs uppercase tracking-widest font-semibold mb-3">
               <Sparkles size={13} />
               <span>Direct Studio Contact</span>
             </div>
 
-            <h3 className="font-display text-2xl font-bold text-white mb-6">
+            <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-6">
               PURPO Studio Headquarters
             </h3>
 
-            <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-8">
               We welcome prospective clients and visionary collaborators to visit our Lagos studio or connect via direct hotline.
             </p>
 
             <div className="space-y-6">
               {/* Phone */}
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-purpo-purple shrink-0">
+                <div className="w-12 h-12 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-purpo-purple shrink-0 shadow-sm">
                   <Phone size={20} />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 font-medium mb-1">
+                  <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-1">
                     Call / WhatsApp Hotline
                   </div>
                   <a
                     href="tel:08133802278"
-                    className="text-base font-semibold text-white hover:text-purpo-cyan transition-colors"
+                    className="text-base font-bold text-zinc-900 dark:text-white hover:text-purpo-purple transition-colors"
                   >
                     08133802278
                   </a>
@@ -129,14 +129,14 @@ export default function ContactSection() {
 
               {/* Address */}
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-purpo-cyan shrink-0">
-                  <MapPin size={20} />
+                <div className="w-12 h-12 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-purpo-cyan shrink-0 shadow-sm">
+                  <MapPin size={20} className="text-purpo-purple dark:text-purpo-cyan" />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 font-medium mb-1">
+                  <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-1">
                     Studio Location
                   </div>
-                  <p className="text-sm font-semibold text-white leading-snug">
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-white leading-snug">
                     27, Ijaoye Street, Jibowu, Yaba, Lagos, Nigeria
                   </p>
                   <div className="text-[11px] text-zinc-500 mt-0.5">
@@ -147,18 +147,18 @@ export default function ContactSection() {
 
               {/* Hours */}
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-purpo-purple-light shrink-0">
-                  <Clock size={20} />
+                <div className="w-12 h-12 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-purpo-purple-light shrink-0 shadow-sm">
+                  <Clock size={20} className="text-purpo-purple" />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 font-medium mb-1">
+                  <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-1">
                     Production Hours
                   </div>
-                  <p className="text-sm font-semibold text-white">
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-white">
                     Mon — Sat: 8:00 AM — 8:00 PM WAT
                   </p>
-                  <div className="text-[11px] text-emerald-400 mt-0.5 flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                  <div className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center space-x-1 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
                     <span>Emergency film shoots available 24/7</span>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default function ContactSection() {
             </div>
 
             {/* Direct WhatsApp Callout */}
-            <div className="mt-8 pt-6 border-t border-white/10">
+            <div className="mt-8 pt-6 border-t border-zinc-200/80 dark:border-white/10">
               <a
                 href="https://wa.me/2348133802278?text=Hello%20PURPO,%20I'd%20like%20to%20discuss%20a%20project."
                 target="_blank"
@@ -185,7 +185,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7 glass-card border border-white/15 rounded-3xl p-8 sm:p-10 shadow-card"
+            className="lg:col-span-7 glass-card border border-zinc-200/80 dark:border-white/15 rounded-3xl p-8 sm:p-10 shadow-card"
           >
             {submitted ? (
               <motion.div
@@ -196,15 +196,15 @@ export default function ContactSection() {
                 <div className="w-16 h-16 rounded-full bg-purpo-purple/20 border border-purpo-purple flex items-center justify-center text-purpo-purple mb-4 shadow-glow">
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-white mb-2">
+                <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-2">
                   Message Dispatched!
                 </h3>
-                <p className="text-zinc-300 text-sm max-w-md leading-relaxed mb-6">
+                <p className="text-zinc-600 dark:text-zinc-300 text-sm max-w-md leading-relaxed mb-6">
                   {feedback}
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-6 py-2.5 rounded-full glass-panel border border-white/10 text-xs uppercase font-semibold text-white hover:border-purpo-purple transition-colors"
+                  className="px-6 py-2.5 rounded-full glass-panel border border-zinc-300 dark:border-white/10 text-xs uppercase font-semibold text-zinc-900 dark:text-white hover:border-purpo-purple transition-colors cursor-pointer"
                 >
                   Send Another Inquiry
                 </button>
@@ -212,10 +212,10 @@ export default function ContactSection() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <h3 className="font-display text-2xl font-bold text-white mb-1">
+                  <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-1">
                     Send a Project Inquiry
                   </h3>
-                  <p className="text-xs text-zinc-400">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
                     Fill out the form below. Our producers will review and respond within 24 hours.
                   </p>
                 </div>
@@ -223,7 +223,7 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
                       Full Name *
                     </label>
                     <input
@@ -233,13 +233,13 @@ export default function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Adebayo Adeleke"
-                      className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
                       Email Address *
                     </label>
                     <input
@@ -249,7 +249,7 @@ export default function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="e.g. adebayo@brand.com"
-                      className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
                     />
                   </div>
                 </div>
@@ -257,7 +257,7 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Phone Number */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
                       Phone Number *
                     </label>
                     <input
@@ -267,23 +267,23 @@ export default function ContactSection() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="e.g. 08133802278"
-                      className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
                     />
                   </div>
 
                   {/* Service Needed */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
                       Service Needed *
                     </label>
                     <select
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-2xl bg-purpo-surface border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white transition-colors cursor-pointer"
+                      className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-purpo-surface border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white shadow-sm transition-colors cursor-pointer"
                     >
                       {SERVICES.map((serv) => (
-                        <option key={serv} value={serv} className="bg-purpo-card text-white">
+                        <option key={serv} value={serv} className="bg-white text-zinc-900 dark:bg-purpo-card dark:text-white">
                           {serv}
                         </option>
                       ))}
@@ -293,7 +293,7 @@ export default function ContactSection() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                  <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
                     Project Overview / Message *
                   </label>
                   <textarea
@@ -303,7 +303,7 @@ export default function ContactSection() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your brand, campaign goals, target timeline, and budget expectation..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors resize-none"
                   />
                 </div>
 

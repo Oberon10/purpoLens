@@ -28,7 +28,7 @@ export default async function HomePage() {
 
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen bg-black text-white selection:bg-purpo-purple selection:text-white">
+      <div className="relative min-h-screen bg-slate-50 text-zinc-900 dark:bg-black dark:text-white selection:bg-purpo-purple selection:text-white transition-colors duration-300">
         {/* Splash Loader */}
         <LoadingScreen />
 
@@ -55,3 +55,4 @@ export default async function HomePage() {
     </ThemeProvider>
   );
 }
+

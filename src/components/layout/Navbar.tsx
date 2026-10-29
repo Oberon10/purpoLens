@@ -46,7 +46,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'py-3.5 glass-panel border-b border-white/10 shadow-card'
+            ? 'py-3.5 glass-panel border-b border-zinc-200/80 dark:border-white/10 shadow-card'
             : 'py-6 bg-transparent'
         }`}
       >
@@ -67,23 +67,23 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-extrabold text-xl tracking-[0.2em] uppercase text-white group-hover:text-purpo-purple transition-colors">
+                <span className="font-display font-extrabold text-xl tracking-[0.2em] uppercase text-zinc-900 dark:text-white group-hover:text-purpo-purple transition-colors">
                   PURPO
                 </span>
-                <span className="text-[9px] uppercase tracking-widest text-zinc-400 font-medium">
+                <span className="text-[9px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-medium">
                   Creative Agency • Lagos
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-1 glass-card px-4 py-1.5 rounded-full border border-white/10">
+            <nav className="hidden lg:flex items-center space-x-1 glass-card px-4 py-1.5 rounded-full border border-zinc-200/80 dark:border-white/10">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-xs uppercase tracking-wider text-zinc-300 hover:text-white px-3 py-1.5 rounded-full hover:bg-white/5 transition-all duration-200"
+                  className="text-xs uppercase tracking-wider text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white px-3 py-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-all duration-200 font-medium"
                 >
                   {link.label}
                 </a>
@@ -92,20 +92,24 @@ export default function Navbar() {
 
             {/* Right Actions */}
             <div className="hidden sm:flex items-center space-x-3">
-              {/* Theme Toggle */}
+              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel border border-white/10 text-zinc-300 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel border border-zinc-200/80 dark:border-white/10 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple transition-colors cursor-pointer"
                 aria-label="Toggle Theme"
                 title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
-                {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+                {theme === 'dark' ? (
+                  <Sun size={17} className="text-amber-400 hover:rotate-45 transition-transform" />
+                ) : (
+                  <Moon size={17} className="text-purpo-purple hover:-rotate-12 transition-transform" />
+                )}
               </button>
 
               {/* Admin Dashboard shortcut */}
               <Link
                 href="/admin"
-                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel border border-white/10 text-zinc-400 hover:text-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel border border-zinc-200/80 dark:border-white/10 text-zinc-500 dark:text-zinc-400 hover:text-purpo-purple transition-colors"
                 title="Admin Dashboard"
               >
                 <Shield size={16} />
@@ -126,14 +130,14 @@ export default function Navbar() {
             <div className="flex items-center space-x-2 lg:hidden">
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 rounded-full flex items-center justify-center glass-panel text-zinc-300"
+                className="w-9 h-9 rounded-full flex items-center justify-center glass-panel text-zinc-700 dark:text-zinc-300 border border-zinc-200/80 dark:border-white/10"
                 aria-label="Toggle Theme"
               >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                {theme === 'dark' ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-purpo-purple" />}
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel text-white focus:outline-none"
+                className="w-10 h-10 rounded-full flex items-center justify-center glass-panel text-zinc-900 dark:text-white border border-zinc-200/80 dark:border-white/10 focus:outline-none"
                 aria-label="Toggle mobile menu"
               >
                 {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -151,7 +155,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden"
+            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden text-zinc-900 dark:text-white"
           >
             <div className="flex flex-col space-y-4 pt-4">
               <span className="text-[11px] uppercase tracking-widest text-purpo-purple font-semibold">
@@ -165,7 +169,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 }}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-2xl font-display font-medium text-white/90 hover:text-purpo-cyan transition-colors"
+                  className="text-2xl font-display font-medium text-zinc-800 dark:text-white/90 hover:text-purpo-purple dark:hover:text-purpo-cyan transition-colors"
                 >
                   {link.label}
                 </motion.a>
@@ -180,7 +184,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex flex-col space-y-4">
+            <div className="pt-6 border-t border-zinc-200 dark:border-white/10 flex flex-col space-y-4">
               <a
                 href="#contact"
                 onClick={(e) => handleLinkClick(e, '#contact')}
@@ -188,7 +192,7 @@ export default function Navbar() {
               >
                 Start Your Project
               </a>
-              <div className="text-center text-xs text-zinc-500">
+              <div className="text-center text-xs text-zinc-500 dark:text-zinc-400">
                 27, Ijaoye Street, Jibowu, Yaba, Lagos • 08133802278
               </div>
             </div>

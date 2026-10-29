@@ -104,7 +104,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/purpo-logo.png" sizes="any" />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased bg-black text-white min-h-screen selection:bg-purpo-purple selection:text-white`}>
+      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased bg-slate-50 text-zinc-900 dark:bg-black dark:text-white min-h-screen selection:bg-purpo-purple selection:text-white transition-colors duration-300`}>
         <JsonLd />
         {children}
       </body>

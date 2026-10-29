@@ -225,3 +225,4 @@ export const INITIAL_TESTIMONIALS: TestimonialItem[] = [
     created_at: '2026-10-15T16:00:00Z',
   },
 ];
+

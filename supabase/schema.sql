@@ -138,3 +138,4 @@ WITH CHECK (bucket_id = 'portfolio-images' AND auth.role() = 'authenticated');
 CREATE POLICY "Authenticated Admin Delete on portfolio-images"
 ON storage.objects FOR DELETE
 USING (bucket_id = 'portfolio-images' AND auth.role() = 'authenticated');
+

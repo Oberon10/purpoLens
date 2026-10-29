@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { Lock, Mail, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export default function AdminLoginPage() {
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-black">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50 dark:bg-black text-zinc-900 dark:text-white transition-colors">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purpo-purple/20 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-purpo-cyan/15 rounded-full blur-[130px] pointer-events-none" />
@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md glass-card border border-white/15 rounded-3xl p-8 sm:p-10 shadow-card relative z-10"
+        className="w-full max-w-md glass-card border border-zinc-200/80 dark:border-white/15 rounded-3xl p-8 sm:p-10 shadow-card relative z-10"
       >
         {/* Brand Logo & Title */}
         <div className="text-center mb-8">
@@ -87,16 +87,16 @@ export default function AdminLoginPage() {
               className="object-contain"
             />
           </Link>
-          <h1 className="font-display text-2xl font-bold tracking-tight text-white">
+          <h1 className="font-display text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
             PURPO Studio CMS
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Restricted Admin Portal • Lagos, Nigeria
           </p>
         </div>
 
         {errorMsg && (
-          <div className="mb-6 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center space-x-2">
+          <div className="mb-6 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-xs flex items-center space-x-2">
             <AlertCircle size={15} className="shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
+            <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
               Admin Email
             </label>
             <div className="relative">
@@ -114,14 +114,14 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@purpo.com"
-                className="w-full px-4 py-3 pl-10 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors"
+                className="w-full px-4 py-3 pl-10 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
               />
-              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
+            <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-2">
               Password
             </label>
             <div className="relative">
@@ -131,9 +131,9 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 pl-10 rounded-2xl bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-white placeholder-zinc-500 transition-colors"
+                className="w-full px-4 py-3 pl-10 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
               />
-              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
             </div>
           </div>
 
@@ -154,22 +154,22 @@ export default function AdminLoginPage() {
         </form>
 
         {/* Instant Demo Access Button */}
-        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+        <div className="mt-8 pt-6 border-t border-zinc-200/80 dark:border-white/10 text-center">
           <button
             type="button"
             onClick={handleDemoAccess}
-            className="w-full py-2.5 px-4 rounded-full glass-panel border border-purpo-cyan/30 text-purpo-cyan hover:bg-purpo-cyan/10 text-xs font-semibold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-full glass-panel border border-purpo-purple/30 text-purpo-purple hover:bg-purpo-purple/10 text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
           >
             <Sparkles size={14} />
             <span>Instant Demo Access (No Setup Required)</span>
           </button>
           <p className="text-[11px] text-zinc-500 mt-3">
-            To configure Supabase live auth, run <code className="text-zinc-400">supabase/schema.sql</code> and set your environment variables.
+            To configure Supabase live auth, run <code className="text-zinc-700 dark:text-zinc-400">supabase/schema.sql</code> and set your environment variables.
           </p>
         </div>
 
         <div className="mt-6 text-center">
-          <Link href="/" className="text-xs text-zinc-400 hover:text-white transition-colors">
+          <Link href="/" className="text-xs text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">
             ← Return to PURPO Portfolio
           </Link>
         </div>

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ZoomIn, Download, MapPin, Tag } from 'lucide-react';
+import { X, ZoomIn } from 'lucide-react';
 import { GalleryItem } from '@/types/database';
 
 interface ImageModalProps {
@@ -36,7 +36,7 @@ export default function ImageModal({ item, onClose }: ImageModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/92 backdrop-blur-xl"
+          className="absolute inset-0 bg-black/85 backdrop-blur-xl"
         />
 
         <motion.div
@@ -44,22 +44,22 @@ export default function ImageModal({ item, onClose }: ImageModalProps) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.25 }}
-          className="relative max-w-5xl max-h-[90vh] w-full glass-panel border border-white/15 rounded-3xl overflow-hidden shadow-card z-10 flex flex-col"
+          className="relative max-w-5xl max-h-[90vh] w-full bg-white dark:bg-purpo-card border border-zinc-200 dark:border-white/15 rounded-3xl overflow-hidden shadow-card z-10 flex flex-col text-zinc-900 dark:text-white"
         >
           {/* Top Bar */}
-          <div className="p-4 sm:p-5 flex items-center justify-between border-b border-white/10 bg-black/50">
+          <div className="p-4 sm:p-5 flex items-center justify-between border-b border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-black/50">
             <div className="flex items-center space-x-3">
-              <span className="text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purpo-cyan/15 text-purpo-cyan border border-purpo-cyan/30 font-semibold">
+              <span className="text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30 font-semibold">
                 {item.category}
               </span>
-              <span className="text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
+              <span className="text-sm font-semibold text-zinc-900 dark:text-white truncate max-w-xs sm:max-w-md">
                 {item.title}
               </span>
             </div>
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+              className="w-9 h-9 rounded-full glass-card border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white hover:border-purpo-purple transition-colors cursor-pointer"
               aria-label="Close image modal"
             >
               <X size={18} />
@@ -67,7 +67,7 @@ export default function ImageModal({ item, onClose }: ImageModalProps) {
           </div>
 
           {/* Large Image Preview */}
-          <div className="relative flex-1 min-h-[350px] sm:min-h-[550px] bg-black/80 flex items-center justify-center p-4">
+          <div className="relative flex-1 min-h-[350px] sm:min-h-[550px] bg-black flex items-center justify-center p-4">
             <div className="relative w-full h-[65vh]">
               <Image
                 src={item.image_url}
@@ -81,8 +81,8 @@ export default function ImageModal({ item, onClose }: ImageModalProps) {
           </div>
 
           {/* Bottom Bar */}
-          <div className="p-4 sm:p-5 border-t border-white/10 bg-purpo-surface flex items-center justify-between">
-            <div className="text-xs text-zinc-400">
+          <div className="p-4 sm:p-5 border-t border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-purpo-surface flex items-center justify-between">
+            <div className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">
               PURPO High-Res Photography Portfolio • Captured in Lagos, Nigeria
             </div>
             <a
@@ -90,7 +90,7 @@ export default function ImageModal({ item, onClose }: ImageModalProps) {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="inline-flex items-center space-x-1.5 text-xs text-purpo-purple hover:text-purpo-cyan font-semibold transition-colors"
+              className="inline-flex items-center space-x-1.5 text-xs text-purpo-purple hover:text-purpo-cyan font-bold transition-colors"
             >
               <ZoomIn size={14} />
               <span>View Full Resolution</span>

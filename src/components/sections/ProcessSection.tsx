@@ -74,24 +74,24 @@ export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="process" className="relative py-28 overflow-hidden bg-black/40">
+    <section id="process" className="relative py-28 overflow-hidden bg-zinc-100/50 dark:bg-black/40 transition-colors">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purpo-purple/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-cyan mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple dark:text-purpo-cyan mb-4">
             <Workflow size={13} />
             <span>How We Work</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6">
             The PURPO{' '}
             <span className="bg-gradient-to-r from-purpo-purple via-purpo-purple-light to-purpo-cyan bg-clip-text text-transparent">
               Production Pipeline
             </span>
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed font-normal dark:font-light">
             Strategy ↓ Planning ↓ Production ↓ Editing ↓ Publishing ↓ Growth
           </p>
         </div>
@@ -111,8 +111,8 @@ export default function ProcessSection() {
                 onClick={() => setActiveStep(idx)}
                 className={`cursor-pointer rounded-3xl p-7 glass-card border transition-all duration-300 relative overflow-hidden ${
                   isSelected
-                    ? 'border-purpo-purple bg-purpo-card/90 shadow-glow'
-                    : 'border-white/10 hover:border-white/20'
+                    ? 'border-purpo-purple bg-white dark:bg-purpo-card/90 shadow-glow'
+                    : 'border-zinc-200/80 dark:border-white/10 hover:border-purpo-purple/40'
                 }`}
               >
                 {/* Glow pill */}
@@ -121,42 +121,42 @@ export default function ProcessSection() {
                 )}
 
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-2xl font-mono font-extrabold text-white/90">
+                  <span className="text-2xl font-mono font-extrabold text-zinc-900 dark:text-white/90">
                     {step.step}
                   </span>
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${
                       isSelected
                         ? 'bg-gradient-to-tr from-purpo-purple to-purpo-cyan text-white'
-                        : 'glass-panel text-zinc-400 border border-white/10'
+                        : 'glass-panel text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-white/10'
                     }`}
                   >
                     <Icon size={22} />
                   </div>
                 </div>
 
-                <h3 className="font-display text-xl font-bold text-white mb-1">
+                <h3 className="font-display text-xl font-bold text-zinc-900 dark:text-white mb-1">
                   {step.title}
                 </h3>
-                <div className="text-xs uppercase tracking-wider text-purpo-cyan font-medium mb-3">
+                <div className="text-xs uppercase tracking-wider text-purpo-purple dark:text-purpo-cyan font-semibold mb-3">
                   {step.tagline}
                 </div>
 
-                <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-5">
+                <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed mb-5">
                   {step.description}
                 </p>
 
-                <div className="border-t border-white/10 pt-4">
-                  <span className="text-[10px] uppercase font-semibold text-zinc-500 tracking-wider block mb-2">
+                <div className="border-t border-zinc-200/80 dark:border-white/10 pt-4">
+                  <span className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400 tracking-wider block mb-2">
                     Key Outputs:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {step.deliverables.map((item, dIdx) => (
                       <span
                         key={dIdx}
-                        className="text-[11px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300 flex items-center space-x-1"
+                        className="text-[11px] px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 flex items-center space-x-1"
                       >
-                        <CheckCircle size={10} className="text-purpo-cyan" />
+                        <CheckCircle size={10} className="text-purpo-purple dark:text-purpo-cyan" />
                         <span>{item}</span>
                       </span>
                     ))}
@@ -169,18 +169,18 @@ export default function ProcessSection() {
 
         {/* Workflow Bottom Callout */}
         <div className="mt-16 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-3xl glass-panel border border-white/15 max-w-4xl mx-auto w-full">
+          <div className="inline-flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-3xl glass-panel border border-zinc-200/80 dark:border-white/15 max-w-4xl mx-auto w-full">
             <div className="text-left">
-              <h4 className="font-display font-bold text-lg text-white mb-1">
+              <h4 className="font-display font-bold text-lg text-zinc-900 dark:text-white mb-1">
                 Have an ambitious production timeline in mind?
               </h4>
-              <p className="text-xs sm:text-sm text-zinc-400">
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
                 We can mobilize full cinema crews across Lagos and internationally within 48-72 hours.
               </p>
             </div>
             <a
               href="#contact"
-              className="px-6 py-3 rounded-full bg-white text-black hover:bg-purpo-cyan hover:text-black font-semibold text-xs uppercase tracking-wider transition-all duration-300 shadow-md whitespace-nowrap cursor-pointer"
+              className="px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black hover:bg-purpo-purple dark:hover:bg-purpo-cyan hover:text-white dark:hover:text-black font-semibold text-xs uppercase tracking-wider transition-all duration-300 shadow-md whitespace-nowrap cursor-pointer"
             >
               Consult With Our Producer
             </a>

@@ -16,27 +16,41 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
+  const applyTheme = (t: Theme) => {
+    const root = document.documentElement;
+    if (t === 'light') {
+      root.classList.remove('dark');
+      root.classList.add('light');
+      root.style.colorScheme = 'light';
+    } else {
+      root.classList.remove('light');
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
     const savedTheme = localStorage.getItem('purpo-theme') as Theme | null;
-    if (savedTheme) {
+    if (savedTheme === 'light' || savedTheme === 'dark') {
       setThemeState(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      applyTheme(savedTheme);
     } else {
-      document.documentElement.classList.add('dark');
+      // Default to dark mode for luxury creative agency aesthetic
+      setThemeState('dark');
+      applyTheme('dark');
     }
   }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem('purpo-theme', newTheme);
-    document.documentElement.classList.toggle('light', newTheme === 'light');
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    applyTheme(newTheme);
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
   };
 
   return (

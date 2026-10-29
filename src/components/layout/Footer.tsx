@@ -8,12 +8,10 @@ import {
   Youtube,
   Linkedin,
   Twitter,
-  Mail,
   MapPin,
   Phone,
   ArrowRight,
   Shield,
-  Heart,
   Video,
 } from 'lucide-react';
 import { subscribeNewsletter } from '@/lib/supabase';
@@ -42,12 +40,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-black border-t border-white/10 pt-20 pb-12 overflow-hidden text-zinc-400">
+    <footer className="relative bg-white dark:bg-black border-t border-zinc-200/80 dark:border-white/10 pt-20 pb-12 overflow-hidden text-zinc-600 dark:text-zinc-400 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-zinc-200/80 dark:border-white/10">
           {/* Brand Info (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
             <Link href="/" className="flex items-center space-x-3 group w-fit">
@@ -60,7 +58,7 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-black text-2xl tracking-[0.2em] uppercase text-white group-hover:text-purpo-purple transition-colors">
+                <span className="font-display font-black text-2xl tracking-[0.2em] uppercase text-zinc-900 dark:text-white group-hover:text-purpo-purple transition-colors">
                   PURPO
                 </span>
                 <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
@@ -69,7 +67,7 @@ export default function Footer() {
               </div>
             </Link>
 
-            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed max-w-sm">
               PURPO is an award-caliber digital agency based in Lagos, Nigeria. We craft cinema-grade commercial films, viral social video campaigns, and high-impact brand strategies.
             </p>
 
@@ -78,7 +76,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:border-purpo-purple transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram size={18} />
@@ -87,7 +85,7 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:border-purpo-purple transition-colors"
                 aria-label="YouTube"
               >
                 <Youtube size={18} />
@@ -96,7 +94,7 @@ export default function Footer() {
                 href="https://vimeo.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:border-purpo-purple transition-colors"
                 aria-label="Vimeo"
               >
                 <Video size={18} />
@@ -105,7 +103,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:border-purpo-purple transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={18} />
@@ -114,7 +112,7 @@ export default function Footer() {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purpo-purple transition-colors"
+                className="w-10 h-10 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:border-purpo-purple transition-colors"
                 aria-label="Twitter / X"
               >
                 <Twitter size={18} />
@@ -124,42 +122,42 @@ export default function Footer() {
 
           {/* Quick Links (2 cols) */}
           <div className="lg:col-span-2">
-            <h4 className="font-display font-semibold text-white text-xs uppercase tracking-widest mb-5">
+            <h4 className="font-display font-bold text-zinc-900 dark:text-white text-xs uppercase tracking-widest mb-5">
               Explore
             </h4>
             <ul className="space-y-3 text-xs">
               <li>
-                <a href="#about" className="hover:text-white transition-colors">
+                <a href="#about" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   About PURPO
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-white transition-colors">
+                <a href="#services" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Our Services
                 </a>
               </li>
               <li>
-                <a href="#work" className="hover:text-white transition-colors">
+                <a href="#work" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Featured 9 Videos
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-white transition-colors">
+                <a href="#gallery" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Photography Gallery
                 </a>
               </li>
               <li>
-                <a href="#process" className="hover:text-white transition-colors">
+                <a href="#process" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Production Pipeline
                 </a>
               </li>
               <li>
-                <a href="#testimonials" className="hover:text-white transition-colors">
+                <a href="#testimonials" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Client Reviews
                 </a>
               </li>
               <li>
-                <Link href="/admin" className="text-purpo-purple hover:underline flex items-center space-x-1">
+                <Link href="/admin" className="text-purpo-purple font-semibold hover:underline flex items-center space-x-1">
                   <Shield size={12} />
                   <span>Admin Portal</span>
                 </Link>
@@ -169,45 +167,45 @@ export default function Footer() {
 
           {/* Services (3 cols) */}
           <div className="lg:col-span-3">
-            <h4 className="font-display font-semibold text-white text-xs uppercase tracking-widest mb-5">
+            <h4 className="font-display font-bold text-zinc-900 dark:text-white text-xs uppercase tracking-widest mb-5">
               Capabilities
             </h4>
             <ul className="space-y-3 text-xs">
-              <li className="text-zinc-300">Videography (Commercial & Events)</li>
-              <li className="text-zinc-300">Professional Video Editing & Sound</li>
-              <li className="text-zinc-300">Content Creation (Reels & TikTok)</li>
-              <li className="text-zinc-300">Social Media Management & Strategy</li>
-              <li className="text-zinc-300">Brand Strategy & Consulting</li>
-              <li className="text-zinc-300">Documentary Production</li>
-              <li className="text-zinc-300">Color Grading & Motion Graphics</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Videography (Commercial & Events)</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Professional Video Editing & Sound</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Content Creation (Reels & TikTok)</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Social Media Management & Strategy</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Brand Strategy & Consulting</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Documentary Production</li>
+              <li className="text-zinc-700 dark:text-zinc-300">Color Grading & Motion Graphics</li>
             </ul>
           </div>
 
           {/* Newsletter & Studio Address (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-display font-semibold text-white text-xs uppercase tracking-widest mb-5">
+            <h4 className="font-display font-bold text-zinc-900 dark:text-white text-xs uppercase tracking-widest mb-5">
               Studio & Newsletter
             </h4>
 
             <div className="text-xs space-y-2 mb-4">
-              <div className="flex items-start space-x-2 text-zinc-300">
-                <MapPin size={14} className="text-purpo-cyan shrink-0 mt-0.5" />
+              <div className="flex items-start space-x-2 text-zinc-700 dark:text-zinc-300">
+                <MapPin size={14} className="text-purpo-purple dark:text-purpo-cyan shrink-0 mt-0.5" />
                 <span>27, Ijaoye Street, Jibowu, Yaba, Lagos, Nigeria</span>
               </div>
-              <div className="flex items-center space-x-2 text-zinc-300">
+              <div className="flex items-center space-x-2 text-zinc-700 dark:text-zinc-300">
                 <Phone size={14} className="text-purpo-purple shrink-0" />
-                <a href="tel:08133802278" className="hover:text-white">
+                <a href="tel:08133802278" className="hover:text-zinc-950 dark:hover:text-white font-semibold">
                   08133802278
                 </a>
               </div>
             </div>
 
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400">
               Subscribe to the PURPO Creative Dispatch for case studies, cinematography breakdowns, and creative trends.
             </p>
 
             {subscribed ? (
-              <div className="p-3 rounded-2xl bg-purpo-purple/20 border border-purpo-purple/40 text-purpo-purple text-xs">
+              <div className="p-3 rounded-2xl bg-purpo-purple/20 border border-purpo-purple/40 text-purpo-purple text-xs font-medium">
                 {subMsg}
               </div>
             ) : (
@@ -219,12 +217,12 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email..."
-                    className="w-full px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs text-white placeholder-zinc-500 focus:border-purpo-purple focus:outline-none pr-10"
+                    className="w-full px-4 py-2.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-purpo-purple focus:outline-none pr-10 shadow-sm"
                   />
                   <button
                     type="submit"
                     disabled={loading}
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white flex items-center justify-center transition-colors"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-purpo-purple hover:bg-purpo-purple-light text-white flex items-center justify-center transition-colors cursor-pointer"
                     aria-label="Subscribe"
                   >
                     <ArrowRight size={13} />
@@ -240,7 +238,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} PURPO Creative Agency. All rights reserved.</p>
           <p className="flex items-center space-x-1 text-zinc-500">
             <span>Crafted with cinema obsession in</span>
-            <span className="text-zinc-300 font-medium">Yaba, Lagos, Nigeria</span>
+            <span className="text-zinc-700 dark:text-zinc-300 font-semibold">Yaba, Lagos, Nigeria</span>
           </p>
         </div>
       </div>

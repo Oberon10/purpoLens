@@ -37,7 +37,7 @@ export default function BackToTop() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 left-6 z-40 flex items-center justify-center w-12 h-12 rounded-full glass-panel border border-white/10 hover:border-purpo-purple text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 group"
+          className="fixed bottom-6 left-6 z-40 flex items-center justify-center w-12 h-12 rounded-full glass-panel border border-zinc-300 dark:border-white/10 hover:border-purpo-purple text-zinc-900 dark:text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
           aria-label="Back to top"
         >
           {/* Circular progress SVG */}
@@ -46,7 +46,7 @@ export default function BackToTop() {
               cx="24"
               cy="24"
               r="20"
-              className="text-white/10 stroke-current"
+              className="text-zinc-200 dark:text-white/10 stroke-current"
               strokeWidth="2"
               fill="transparent"
             />
@@ -62,7 +62,7 @@ export default function BackToTop() {
               fill="transparent"
             />
           </svg>
-          <ArrowUp className="w-5 h-5 text-zinc-300 group-hover:text-white group-hover:-translate-y-0.5 transition-transform" />
+          <ArrowUp className="w-5 h-5 text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-950 dark:group-hover:text-white group-hover:-translate-y-0.5 transition-transform" />
         </motion.button>
       )}
     </AnimatePresence>

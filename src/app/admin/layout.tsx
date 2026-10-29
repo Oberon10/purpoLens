@@ -17,9 +17,10 @@ export default function AdminLayout({
 }) {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-black text-white selection:bg-purpo-purple selection:text-white">
+      <div className="min-h-screen bg-slate-50 text-zinc-900 dark:bg-black dark:text-white selection:bg-purpo-purple selection:text-white transition-colors duration-300">
         {children}
       </div>
     </ThemeProvider>
   );
 }
+

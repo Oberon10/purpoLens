@@ -35,24 +35,24 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   if (!current) return null;
 
   return (
-    <section id="testimonials" className="relative py-28 overflow-hidden bg-black/60">
+    <section id="testimonials" className="relative py-28 overflow-hidden bg-zinc-100/50 dark:bg-black/60 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-purpo-purple/15 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-cyan mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple dark:text-purpo-cyan mb-4">
             <MessageSquare size={13} />
             <span>Client Endorsements</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-4">
             Trusted By Visionaries &{' '}
             <span className="bg-gradient-to-r from-purpo-purple via-purpo-purple-light to-purpo-cyan bg-clip-text text-transparent">
               Industry Leaders
             </span>
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base font-light">
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base font-normal dark:font-light">
             Read how our cinematic storytelling and strategic content production have generated measurable impact for top brands.
           </p>
         </div>
@@ -63,8 +63,8 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
           onMouseLeave={() => setIsPaused(false)}
           className="max-w-4xl mx-auto"
         >
-          <div className="relative glass-card border border-white/15 rounded-3xl p-8 sm:p-14 shadow-card overflow-hidden">
-            <Quote className="absolute top-8 right-8 w-20 h-20 text-white/5 pointer-events-none" />
+          <div className="relative glass-card border border-zinc-200/80 dark:border-white/15 rounded-3xl p-8 sm:p-14 shadow-card overflow-hidden">
+            <Quote className="absolute top-8 right-8 w-20 h-20 text-zinc-200 dark:text-white/5 pointer-events-none" />
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -83,7 +83,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                 </div>
 
                 {/* Review Text */}
-                <p className="text-lg sm:text-2xl text-zinc-200 font-light leading-relaxed mb-8 italic max-w-2xl">
+                <p className="text-lg sm:text-2xl text-zinc-800 dark:text-zinc-200 font-normal dark:font-light leading-relaxed mb-8 italic max-w-2xl">
                   &ldquo;{current.review}&rdquo;
                 </p>
 
@@ -100,10 +100,10 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                     </div>
                   )}
                   <div className="text-left">
-                    <h4 className="font-display font-bold text-white text-base">
+                    <h4 className="font-display font-bold text-zinc-900 dark:text-white text-base">
                       {current.name}
                     </h4>
-                    <p className="text-xs uppercase tracking-wider text-purpo-cyan font-medium">
+                    <p className="text-xs uppercase tracking-wider text-purpo-purple dark:text-purpo-cyan font-semibold">
                       {current.company}
                     </p>
                   </div>
@@ -112,7 +112,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
             </AnimatePresence>
 
             {/* Navigation Controls */}
-            <div className="flex items-center justify-between mt-10 pt-6 border-t border-white/10">
+            <div className="flex items-center justify-between mt-10 pt-6 border-t border-zinc-200/80 dark:border-white/10">
               <div className="flex items-center space-x-2">
                 {testimonials.map((_, idx) => (
                   <button
@@ -121,7 +121,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       currentIndex === idx
                         ? 'w-8 bg-purpo-purple'
-                        : 'w-2 bg-white/20 hover:bg-white/40'
+                        : 'w-2 bg-zinc-300 dark:bg-white/20 hover:bg-zinc-400 dark:hover:bg-white/40'
                     }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
@@ -131,14 +131,14 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               <div className="flex items-center space-x-3">
                 <button
                   onClick={handlePrev}
-                  className="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:border-purpo-purple transition-colors"
+                  className="w-10 h-10 rounded-full glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple transition-colors cursor-pointer"
                   aria-label="Previous testimonial"
                 >
                   <ChevronLeft size={18} />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:border-purpo-purple transition-colors"
+                  className="w-10 h-10 rounded-full glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple transition-colors cursor-pointer"
                   aria-label="Next testimonial"
                 >
                   <ChevronRight size={18} />

@@ -10,7 +10,6 @@ import {
   Compass,
   ArrowUpRight,
   Layers,
-  Sparkles,
 } from 'lucide-react';
 
 interface ServiceItem {
@@ -33,7 +32,7 @@ const SERVICES: ServiceItem[] = [
     description:
       'Full-scale production for television commercials, high-profile corporate galas, music videos, and cinematic brand documentaries captured with industry-standard cinema cameras.',
     deliverables: ['Commercial Videos', 'VIP & Corporate Events', 'Documentary Production', 'Multi-Cam Setups'],
-    gradient: 'from-purple-600/20 to-indigo-600/20',
+    gradient: 'from-purple-600/15 to-indigo-600/15',
     accent: 'text-purpo-purple',
   },
   {
@@ -44,8 +43,8 @@ const SERVICES: ServiceItem[] = [
     description:
       'Transforming raw footage into seamless, rhythmically hypnotic narratives with advanced color grading, match cuts, dynamic sound design, and custom 2D/3D motion graphics.',
     deliverables: ['Commercial Edits', 'Social Media Edits', 'Motion Graphics', 'Cinematic Color Grading'],
-    gradient: 'from-indigo-600/20 to-blue-600/20',
-    accent: 'text-indigo-400',
+    gradient: 'from-indigo-600/15 to-blue-600/15',
+    accent: 'text-indigo-500 dark:text-indigo-400',
   },
   {
     id: 'content-creation',
@@ -55,8 +54,8 @@ const SERVICES: ServiceItem[] = [
     description:
       'Crafted specifically for the algorithmic fast lane. We design scroll-stopping Reels, TikToks, and YouTube Shorts that hook viewers within the first 2 seconds and convert attention into brand loyalty.',
     deliverables: ['Viral Instagram Reels', 'TikTok Video Packages', 'Short-Form Conversion Ads', 'Creative Scripting'],
-    gradient: 'from-cyan-600/20 to-teal-600/20',
-    accent: 'text-purpo-cyan',
+    gradient: 'from-cyan-600/15 to-teal-600/15',
+    accent: 'text-purpo-purple dark:text-purpo-cyan',
   },
   {
     id: 'social-media-management',
@@ -66,8 +65,8 @@ const SERVICES: ServiceItem[] = [
     description:
       'Comprehensive social architecture. We handle content calendars, algorithmic scheduling, community engagement, and analytics reporting to position your brand at the cultural forefront.',
     deliverables: ['Comprehensive Strategy', 'Automated Scheduling', 'Monthly Content Calendar', 'Audience Growth Consulting'],
-    gradient: 'from-teal-600/20 to-emerald-600/20',
-    accent: 'text-emerald-400',
+    gradient: 'from-teal-600/15 to-emerald-600/15',
+    accent: 'text-emerald-600 dark:text-emerald-400',
   },
   {
     id: 'brand-strategy',
@@ -77,7 +76,7 @@ const SERVICES: ServiceItem[] = [
     description:
       'Clarity before camera. We define your core brand narrative, target audience psychology, visual identity guidelines, and long-term creative roadmap for domestic and international expansion.',
     deliverables: ['Brand Positioning & Moat', 'Visual Identity Architecture', 'Creative Direction Audits', 'Growth & Funnel Consulting'],
-    gradient: 'from-violet-600/20 to-purple-600/20',
+    gradient: 'from-violet-600/15 to-purple-600/15',
     accent: 'text-purpo-purple-light',
   },
 ];
@@ -92,17 +91,17 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
             <Layers size={13} />
             <span>Core Expertise</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6">
             Bespoke Services For{' '}
             <span className="bg-gradient-to-r from-purpo-purple via-purpo-purple-light to-purpo-cyan bg-clip-text text-transparent">
               Visionary Brands
             </span>
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed font-normal dark:font-light">
             From concept to execution, we combine cinematic artistry with modern digital growth strategies.
           </p>
         </div>
@@ -118,7 +117,7 @@ export default function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative rounded-3xl glass-card border border-white/10 p-8 flex flex-col justify-between hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-1.5 shadow-card overflow-hidden"
+                className="group relative rounded-3xl glass-card border border-zinc-200/80 dark:border-white/10 p-8 flex flex-col justify-between hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-1.5 shadow-card overflow-hidden"
               >
                 {/* Subtle card ambient gradient */}
                 <div
@@ -127,34 +126,34 @@ export default function ServicesSection() {
 
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 group-hover:border-purpo-purple">
+                    <div className="w-14 h-14 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 group-hover:border-purpo-purple">
                       <Icon className={`w-7 h-7 ${service.accent}`} />
                     </div>
-                    <span className="text-xs font-mono font-bold text-zinc-500 group-hover:text-purpo-cyan transition-colors">
+                    <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-500 group-hover:text-purpo-purple dark:group-hover:text-purpo-cyan transition-colors">
                       0{index + 1}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-purpo-purple transition-colors">
+                  <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-purpo-purple transition-colors">
                     {service.title}
                   </h3>
-                  <div className="text-xs uppercase tracking-wider text-purpo-cyan/90 font-medium mb-4">
+                  <div className="text-xs uppercase tracking-wider text-purpo-purple dark:text-purpo-cyan/90 font-semibold mb-4">
                     {service.tagline}
                   </div>
 
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
                 </div>
 
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-3 border-t border-white/10 pt-4">
+                  <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-3 border-t border-zinc-200/80 dark:border-white/10 pt-4">
                     Key Deliverables:
                   </div>
                   <ul className="space-y-2 mb-6">
                     {service.deliverables.map((item, dIdx) => (
-                      <li key={dIdx} className="flex items-center space-x-2 text-xs text-zinc-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purpo-purple" />
+                      <li key={dIdx} className="flex items-center space-x-2 text-xs text-zinc-700 dark:text-zinc-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purpo-purple shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -162,7 +161,7 @@ export default function ServicesSection() {
 
                   <a
                     href="#contact"
-                    className="inline-flex items-center space-x-2 text-xs uppercase font-semibold text-white group-hover:text-purpo-cyan transition-colors pt-2"
+                    className="inline-flex items-center space-x-2 text-xs uppercase font-bold text-zinc-900 dark:text-white group-hover:text-purpo-purple dark:group-hover:text-purpo-cyan transition-colors pt-2"
                   >
                     <span>Request Proposal</span>
                     <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -185,7 +184,7 @@ export default function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                className="group relative rounded-3xl glass-card border border-white/10 p-8 flex flex-col justify-between hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-1.5 shadow-card overflow-hidden"
+                className="group relative rounded-3xl glass-card border border-zinc-200/80 dark:border-white/10 p-8 flex flex-col justify-between hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-1.5 shadow-card overflow-hidden"
               >
                 <div
                   className={`absolute -top-24 -right-24 w-48 h-48 rounded-full bg-gradient-to-br ${service.gradient} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
@@ -193,34 +192,34 @@ export default function ServicesSection() {
 
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 group-hover:border-purpo-purple">
+                    <div className="w-14 h-14 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 group-hover:border-purpo-purple">
                       <Icon className={`w-7 h-7 ${service.accent}`} />
                     </div>
-                    <span className="text-xs font-mono font-bold text-zinc-500 group-hover:text-purpo-cyan transition-colors">
+                    <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-500 group-hover:text-purpo-purple dark:group-hover:text-purpo-cyan transition-colors">
                       0{actualIndex + 1}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-purpo-purple transition-colors">
+                  <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-purpo-purple transition-colors">
                     {service.title}
                   </h3>
-                  <div className="text-xs uppercase tracking-wider text-purpo-cyan/90 font-medium mb-4">
+                  <div className="text-xs uppercase tracking-wider text-purpo-purple dark:text-purpo-cyan/90 font-semibold mb-4">
                     {service.tagline}
                   </div>
 
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
                 </div>
 
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-3 border-t border-white/10 pt-4">
+                  <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-3 border-t border-zinc-200/80 dark:border-white/10 pt-4">
                     Key Deliverables:
                   </div>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
                     {service.deliverables.map((item, dIdx) => (
-                      <li key={dIdx} className="flex items-center space-x-2 text-xs text-zinc-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purpo-purple" />
+                      <li key={dIdx} className="flex items-center space-x-2 text-xs text-zinc-700 dark:text-zinc-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purpo-purple shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -228,7 +227,7 @@ export default function ServicesSection() {
 
                   <a
                     href="#contact"
-                    className="inline-flex items-center space-x-2 text-xs uppercase font-semibold text-white group-hover:text-purpo-cyan transition-colors pt-2"
+                    className="inline-flex items-center space-x-2 text-xs uppercase font-bold text-zinc-900 dark:text-white group-hover:text-purpo-purple dark:group-hover:text-purpo-cyan transition-colors pt-2"
                   >
                     <span>Request Proposal</span>
                     <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

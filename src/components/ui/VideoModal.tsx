@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Play, Pause, Volume2, VolumeX, Maximize2, Tag, User, Sparkles } from 'lucide-react';
+import { X, Play, Pause, Volume2, VolumeX, Maximize2, User } from 'lucide-react';
 import { VideoItem } from '@/types/database';
 
 interface VideoModalProps {
@@ -71,7 +71,7 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+          className="absolute inset-0 bg-black/85 backdrop-blur-xl"
         />
 
         {/* Modal Window */}
@@ -80,22 +80,22 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto glass-panel border border-white/15 rounded-3xl shadow-glow-lg z-10 flex flex-col"
+          className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-white dark:bg-purpo-card border border-zinc-200 dark:border-white/15 rounded-3xl shadow-glow-lg z-10 flex flex-col text-zinc-900 dark:text-white"
         >
           {/* Top Control Bar */}
-          <div className="p-4 sm:p-6 flex items-center justify-between border-b border-white/10">
+          <div className="p-4 sm:p-6 flex items-center justify-between border-b border-zinc-200 dark:border-white/10 bg-zinc-50/50 dark:bg-transparent">
             <div className="flex items-center space-x-3">
               <span className="w-2.5 h-2.5 rounded-full bg-purpo-purple animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-zinc-300">
+              <span className="text-xs font-semibold uppercase tracking-widest text-zinc-700 dark:text-zinc-300">
                 PURPO Cinema Player
               </span>
-              <span className="text-white/20">|</span>
-              <span className="text-xs text-purpo-cyan font-mono">{video.category}</span>
+              <span className="text-zinc-300 dark:text-white/20">|</span>
+              <span className="text-xs text-purpo-purple dark:text-purpo-cyan font-mono font-bold">{video.category}</span>
             </div>
 
             <button
               onClick={onClose}
-              className="w-10 h-10 rounded-full glass-card border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:border-purpo-purple transition-all duration-200"
+              className="w-10 h-10 rounded-full glass-card border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple transition-all duration-200 cursor-pointer"
               aria-label="Close video player"
             >
               <X size={18} />
@@ -152,17 +152,17 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
           </div>
 
           {/* Project Details Footer */}
-          <div className="p-6 sm:p-8 bg-purpo-surface/90 border-t border-white/10">
+          <div className="p-6 sm:p-8 bg-zinc-50 dark:bg-purpo-surface/90 border-t border-zinc-200 dark:border-white/10">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="max-w-2xl">
                 <div className="flex items-center space-x-3 mb-2">
-                  <span className="text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purpo-purple/20 text-purpo-purple border border-purpo-purple/30 font-semibold">
+                  <span className="text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purpo-purple/15 text-purpo-purple border border-purpo-purple/30 font-semibold">
                     {video.category}
                   </span>
                   {video.client_name && (
-                    <span className="text-xs text-zinc-400 flex items-center space-x-1">
-                      <User size={13} className="inline text-zinc-500" />
-                      <span>Client: <strong className="text-zinc-200">{video.client_name}</strong></span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400 flex items-center space-x-1">
+                      <User size={13} className="inline text-zinc-400 dark:text-zinc-500" />
+                      <span>Client: <strong className="text-zinc-900 dark:text-zinc-200">{video.client_name}</strong></span>
                     </span>
                   )}
                   {video.duration && (
@@ -172,10 +172,10 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
                   )}
                 </div>
 
-                <h3 className="font-display text-2xl font-bold text-white mb-2">
+                <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white mb-2">
                   {video.title}
                 </h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
                   {video.description}
                 </p>
               </div>

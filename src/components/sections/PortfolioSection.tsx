@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Search, Filter, Sparkles, Film, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Search, Filter, Film, ArrowRight } from 'lucide-react';
 import { VideoItem, VideoCategory } from '@/types/database';
 import VideoModal from '@/components/ui/VideoModal';
 
@@ -46,7 +46,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
   const displayedVideos = filteredVideos.slice(0, 9);
 
   return (
-    <section id="work" className="relative py-28 overflow-hidden bg-black/80">
+    <section id="work" className="relative py-28 overflow-hidden bg-zinc-100/40 dark:bg-black/80 transition-colors">
       {/* Background glow ambiance */}
       <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-purpo-purple/15 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute -bottom-10 left-10 w-[400px] h-[400px] bg-purpo-cyan/10 rounded-full blur-[140px] pointer-events-none" />
@@ -55,17 +55,17 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
               <Film size={13} />
               <span>Selected Portfolio</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+            <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-4">
               Featured Work &{' '}
               <span className="bg-gradient-to-r from-purpo-purple via-purpo-purple-light to-purpo-cyan bg-clip-text text-transparent">
                 Cinematic Reels
               </span>
             </h2>
-            <p className="text-zinc-400 text-sm sm:text-base font-light">
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base font-normal dark:font-light">
               Explore 9 signature productions delivered for leading brands, artists, and creators in Lagos and internationally.
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search projects or clients..."
-              className="w-full px-4 py-2.5 pl-10 rounded-full bg-white/5 border border-white/10 focus:border-purpo-purple focus:outline-none text-xs text-white placeholder-zinc-500 transition-colors"
+              className="w-full px-4 py-2.5 pl-10 rounded-full bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-xs text-zinc-900 dark:text-white placeholder-zinc-500 shadow-sm transition-colors"
             />
             <Search
               size={15}
@@ -86,7 +86,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-white"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-zinc-700 dark:hover:text-white"
               >
                 ✕
               </button>
@@ -96,7 +96,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
 
         {/* Category Filters */}
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-12 scrollbar-none">
-          <div className="flex items-center space-x-1.5 pr-2 text-zinc-500 text-xs uppercase tracking-wider font-semibold">
+          <div className="flex items-center space-x-1.5 pr-2 text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider font-semibold">
             <Filter size={13} />
             <span>Filter:</span>
           </div>
@@ -106,10 +106,10 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 whitespace-nowrap ${
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'bg-gradient-to-r from-purpo-purple to-purpo-purple-glow text-white shadow-glow'
-                    : 'glass-card border border-white/10 text-zinc-400 hover:text-white hover:border-white/20'
+                    : 'glass-card border border-zinc-200/80 dark:border-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-purpo-purple/40'
                 }`}
               >
                 {cat}
@@ -120,8 +120,8 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
 
         {/* 9 Video Slots Grid: Exactly 3x3 layout on large screens */}
         {displayedVideos.length === 0 ? (
-          <div className="py-20 text-center glass-panel rounded-3xl border border-white/10">
-            <p className="text-zinc-400 text-sm">No videos found matching your search criteria.</p>
+          <div className="py-20 text-center glass-panel rounded-3xl border border-zinc-200/80 dark:border-white/10">
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm">No videos found matching your search criteria.</p>
             <button
               onClick={() => {
                 setSelectedCategory('All');
@@ -141,7 +141,7 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-                className="group relative rounded-3xl overflow-hidden glass-card border border-white/10 hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-2 shadow-card flex flex-col justify-between"
+                className="group relative rounded-3xl overflow-hidden glass-card border border-zinc-200/80 dark:border-white/10 hover:border-purpo-purple/50 transition-all duration-300 hover:-translate-y-2 shadow-card flex flex-col justify-between"
               >
                 {/* Thumbnail Area with Aspect Ratio & Lazy Loading */}
                 <div
@@ -182,31 +182,31 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     {video.client_name && (
-                      <div className="text-[11px] uppercase tracking-wider text-purpo-cyan font-medium mb-1.5">
+                      <div className="text-[11px] uppercase tracking-wider text-purpo-purple dark:text-purpo-cyan font-semibold mb-1.5">
                         Client: {video.client_name}
                       </div>
                     )}
                     <h3
                       onClick={() => setActiveVideo(video)}
-                      className="font-display text-xl font-bold text-white mb-2 group-hover:text-purpo-purple transition-colors cursor-pointer line-clamp-1"
+                      className="font-display text-xl font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-purpo-purple transition-colors cursor-pointer line-clamp-1"
                     >
                       {video.title}
                     </h3>
-                    <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4 font-light">
+                    <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4 font-normal dark:font-light">
                       {video.description}
                     </p>
                   </div>
 
                   {/* Play Video Trigger Button */}
-                  <div className="border-t border-white/10 pt-4 flex items-center justify-between">
+                  <div className="border-t border-zinc-200/80 dark:border-white/10 pt-4 flex items-center justify-between">
                     <button
                       onClick={() => setActiveVideo(video)}
-                      className="inline-flex items-center space-x-2 text-xs uppercase font-semibold text-purpo-purple group-hover:text-purpo-cyan transition-colors"
+                      className="inline-flex items-center space-x-2 text-xs uppercase font-bold text-purpo-purple group-hover:text-purpo-purple-glow transition-colors cursor-pointer"
                     >
                       <Play size={12} className="fill-current" />
                       <span>Play Video</span>
                     </button>
-                    <span className="text-[10px] font-mono text-zinc-500">
+                    <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
                       Slot 0{index + 1}
                     </span>
                   </div>
@@ -218,12 +218,12 @@ export default function PortfolioSection({ videos }: PortfolioSectionProps) {
 
         {/* Section Bottom CTA */}
         <div className="mt-16 text-center">
-          <p className="text-sm text-zinc-400 mb-4">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
             Need a custom format, aerial drone cinematography, or multi-city production?
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center space-x-2 text-xs uppercase font-semibold tracking-wider text-white hover:text-purpo-cyan transition-colors"
+            className="inline-flex items-center space-x-2 text-xs uppercase font-bold tracking-wider text-zinc-900 dark:text-white hover:text-purpo-purple dark:hover:text-purpo-cyan transition-colors"
           >
             <span>Discuss your custom production requirements</span>
             <ArrowRight size={14} />

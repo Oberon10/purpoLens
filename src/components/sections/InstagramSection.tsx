@@ -52,7 +52,7 @@ const INSTA_POSTS = [
 
 export default function InstagramSection() {
   return (
-    <section className="relative py-24 overflow-hidden border-t border-white/5 bg-black/40">
+    <section className="relative py-24 overflow-hidden border-t border-zinc-200/80 dark:border-white/5 bg-zinc-100/40 dark:bg-black/40 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
           <div>
@@ -60,7 +60,7 @@ export default function InstagramSection() {
               <Instagram size={14} />
               <span>@purpolens On Instagram</span>
             </div>
-            <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-white">
+            <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white">
               Behind the Scenes & Live Drops
             </h3>
           </div>
@@ -69,7 +69,7 @@ export default function InstagramSection() {
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full glass-card border border-white/10 text-xs font-semibold uppercase tracking-wider text-white hover:border-purpo-purple hover:text-purpo-cyan transition-all duration-300 w-fit"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white hover:border-purpo-purple hover:text-purpo-purple transition-all duration-300 w-fit"
           >
             <span>Follow @purpolens</span>
             <ExternalLink size={13} />
@@ -85,7 +85,7 @@ export default function InstagramSection() {
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ y: -4 }}
-              className="group relative aspect-square rounded-2xl overflow-hidden glass-card border border-white/10 block"
+              className="group relative aspect-square rounded-2xl overflow-hidden glass-card border border-zinc-200/80 dark:border-white/10 block shadow-sm"
             >
               <Image
                 src={post.image}
@@ -96,7 +96,7 @@ export default function InstagramSection() {
               />
 
               {/* Overlay with metrics */}
-              <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-3 text-center">
+              <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-3 text-center text-white">
                 <Instagram size={22} className="text-purpo-cyan mb-2" />
                 <div className="flex items-center space-x-3 text-white text-xs font-semibold mb-2">
                   <span className="flex items-center space-x-1">
