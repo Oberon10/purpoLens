@@ -21,7 +21,12 @@ export const getSupabase = (): any => {
     return null;
   }
   if (!supabaseInstance) {
-    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    try {
+      supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    } catch (err) {
+      console.warn('Failed to initialize Supabase client:', err);
+      return null;
+    }
   }
   return supabaseInstance;
 };
