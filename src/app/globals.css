@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #0d0d11;
+    --card-foreground: #ffffff;
+    --border: #23232c;
+    --primary: #5E60CE;
+    --primary-foreground: #ffffff;
+    --secondary: #64DFDF;
+    --muted: #16161c;
+    --muted-foreground: #a1a1aa;
+    --accent: #7B2CBF;
+  }
+
+  .light {
+    --background: #f8fafc;
+    --foreground: #09090b;
+    --card: #ffffff;
+    --card-foreground: #09090b;
+    --border: #e2e8f0;
+    --primary: #5E60CE;
+    --primary-foreground: #ffffff;
+    --secondary: #0096c7;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #7B2CBF;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  selection-background-color: #5E60CE;
+  selection-color: #ffffff;
+}
+
+::selection {
+  background-color: #5E60CE;
+  color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5E60CE;
+}
+
+/* Glassmorphism effects */
+.glass-panel {
+  background: rgba(14, 14, 18, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-card {
+  background: rgba(20, 20, 24, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.glass-card:hover {
+  border-color: rgba(94, 96, 206, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(94, 96, 206, 0.2);
+}
+
+/* Luxury gradients */
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 50%, #9a9aa8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #ffffff 0%, #c77dff 50%, #5E60CE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #64DFDF 0%, #48CAE4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-purple {
+  filter: drop-shadow(0 0 20px rgba(94, 96, 206, 0.5));
+}
