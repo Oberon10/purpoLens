@@ -106,23 +106,35 @@ export default function ContactSection() {
             </p>
 
             <div className="space-y-6">
-              {/* Phone */}
+              {/* Phone / WhatsApp */}
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl glass-panel border border-zinc-200/80 dark:border-white/10 flex items-center justify-center text-purpo-purple shrink-0 shadow-sm">
-                  <Phone size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-[#25D366]/15 border border-[#25D366]/30 flex items-center justify-center shrink-0 shadow-sm">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#25D366]" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.004 0C5.372 0 .004 5.368.004 11.996c0 2.112.551 4.17 1.6 5.987L.004 24l6.208-1.628c1.75.954 3.72 1.456 5.792 1.456 6.632 0 12-5.368 12-11.996C24.004 5.368 18.636 0 12.004 0zm0 21.942c-1.872 0-3.704-.503-5.304-1.456l-.38-.226-3.94 1.033 1.052-3.84-.248-.395c-1.048-1.668-1.602-3.614-1.602-5.592 0-5.797 4.725-10.518 10.532-10.518 2.81 0 5.452 1.094 7.438 3.077 1.986 1.983 3.078 4.622 3.078 7.43-.001 5.798-4.726 10.518-10.534 10.518zm5.772-7.886c-.316-.158-1.87-.923-2.16-1.029-.29-.105-.502-.158-.712.158-.21.316-.816 1.029-1 1.239-.184.21-.368.237-.684.079-.316-.158-1.334-.492-2.541-1.568-.939-.838-1.573-1.874-1.757-2.19-.184-.316-.02-.487.138-.644.143-.142.316-.368.474-.552.158-.184.21-.316.316-.526.105-.21.053-.395-.026-.553-.079-.158-.711-1.713-.974-2.345-.257-.615-.518-.532-.711-.542-.184-.01-.395-.01-.606-.01-.21 0-.553.079-.842.395-.29.316-1.106 1.08-1.106 2.634s1.132 3.055 1.29 3.266c.158.21 2.226 3.4 5.394 4.767.754.325 1.343.519 1.802.665.757.241 1.446.207 1.99.126.608-.091 1.87-.764 2.133-1.501.263-.737.263-1.369.184-1.501-.079-.132-.29-.21-.606-.368z" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-1">
                     Call / WhatsApp Hotline
                   </div>
-                  <a
-                    href="tel:08133802278"
-                    className="text-base font-bold text-zinc-900 dark:text-white hover:text-purpo-purple transition-colors"
-                  >
-                    08133802278
-                  </a>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <a
+                      href="tel:08133802278"
+                      className="text-base font-bold text-zinc-900 dark:text-white hover:text-[#25D366] transition-colors"
+                    >
+                      08133802278
+                    </a>
+                    <a
+                      href="https://wa.me/2348133802278?text=Hello%20PURPO%20Creative%20Agency!%20I'm%20interested%20in%20working%20with%20you."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-[10px] font-bold uppercase tracking-wider shadow-sm transition-transform hover:scale-105 active:scale-95"
+                    >
+                      <span>Chat WhatsApp</span>
+                    </a>
+                  </div>
                   <div className="text-[11px] text-zinc-500 mt-0.5">
-                    Direct line to Creative Director
+                    Direct line to Creative Director • 24/7 Rapid Response
                   </div>
                 </div>
               </div>
