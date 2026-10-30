@@ -90,7 +90,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
             ? 'py-3.5 glass-panel border-b border-zinc-200/80 dark:border-white/10 shadow-card backdrop-blur-md'
-            : 'py-5 bg-gradient-to-b from-black/80 via-black/40 to-transparent'
+            : 'py-5 bg-gradient-to-b from-white/95 via-white/60 to-transparent dark:from-black/90 dark:via-black/50 dark:to-transparent backdrop-blur-xs'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,33 +111,17 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col">
-                <span
-                  className={`font-display font-extrabold text-xl tracking-[0.2em] uppercase transition-colors ${
-                    scrolled
-                      ? 'text-zinc-900 dark:text-white group-hover:text-purpo-purple'
-                      : 'text-white group-hover:text-purpo-cyan drop-shadow-sm'
-                  }`}
-                >
+                <span className="font-display font-extrabold text-xl tracking-[0.2em] uppercase text-zinc-950 dark:text-white group-hover:text-purpo-purple transition-colors">
                   PURPO
                 </span>
-                <span
-                  className={`text-[9px] uppercase tracking-widest font-medium transition-colors ${
-                    scrolled ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-300 drop-shadow-sm'
-                  }`}
-                >
+                <span className="text-[9px] uppercase tracking-widest font-medium text-zinc-600 dark:text-zinc-400">
                   Creative Agency • Lagos
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav
-              className={`hidden lg:flex items-center space-x-1 px-3 py-1.5 rounded-full border transition-all ${
-                scrolled
-                  ? 'glass-card border-zinc-200/80 dark:border-white/10'
-                  : 'bg-black/50 backdrop-blur-md border-white/20'
-              }`}
-            >
+            <nav className="hidden lg:flex items-center space-x-1 px-3 py-1.5 rounded-full border border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md shadow-sm">
               {NAV_LINKS.map((link) => {
                 const targetKey = link.href.substring(1);
                 const isActive = activeSection === targetKey;
@@ -148,10 +132,8 @@ export default function Navbar() {
                     onClick={(e) => handleLinkClick(e, link.href)}
                     className={`relative text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full font-medium transition-all duration-200 ${
                       isActive
-                        ? 'text-purpo-purple dark:text-purpo-cyan bg-purpo-purple/15 dark:bg-white/10 font-bold shadow-sm'
-                        : scrolled
-                        ? 'text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5'
-                        : 'text-zinc-200 hover:text-white hover:bg-white/15'
+                        ? 'text-purpo-purple dark:text-purpo-cyan bg-purpo-purple/10 dark:bg-white/10 font-bold shadow-sm'
+                        : 'text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5'
                     }`}
                   >
                     {link.label}
@@ -168,29 +150,21 @@ export default function Navbar() {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer border ${
-                  scrolled
-                    ? 'glass-panel border-zinc-200/80 dark:border-white/10 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple'
-                    : 'bg-black/50 backdrop-blur-md border-white/20 text-white hover:border-purpo-purple'
-                }`}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer border border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:border-purpo-purple shadow-sm"
                 aria-label="Toggle Theme"
                 title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
                 {theme === 'dark' ? (
                   <Sun size={17} className="text-amber-400 hover:rotate-45 transition-transform" />
                 ) : (
-                  <Moon size={17} className="text-purpo-cyan hover:-rotate-12 transition-transform" />
+                  <Moon size={17} className="text-purpo-purple hover:-rotate-12 transition-transform" />
                 )}
               </button>
 
               {/* Admin Dashboard shortcut */}
               <Link
                 href="/admin"
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors border ${
-                  scrolled
-                    ? 'glass-panel border-zinc-200/80 dark:border-white/10 text-zinc-500 dark:text-zinc-400 hover:text-purpo-purple'
-                    : 'bg-black/50 backdrop-blur-md border-white/20 text-zinc-300 hover:text-white hover:border-purpo-purple'
-                }`}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors border border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md text-zinc-600 dark:text-zinc-400 hover:text-purpo-purple shadow-sm"
                 title="Admin Dashboard"
               >
                 <Shield size={16} />
@@ -211,22 +185,14 @@ export default function Navbar() {
             <div className="flex items-center space-x-2 lg:hidden">
               <button
                 onClick={toggleTheme}
-                className={`w-9 h-9 rounded-full flex items-center justify-center border ${
-                  scrolled
-                    ? 'glass-panel text-zinc-700 dark:text-zinc-300 border-zinc-200/80 dark:border-white/10'
-                    : 'bg-black/50 backdrop-blur-md text-white border-white/20'
-                }`}
+                className="w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md text-zinc-700 dark:text-zinc-300 shadow-sm"
                 aria-label="Toggle Theme"
               >
-                {theme === 'dark' ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-purpo-cyan" />}
+                {theme === 'dark' ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-purpo-purple" />}
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center border focus:outline-none ${
-                  scrolled
-                    ? 'glass-panel text-zinc-900 dark:text-white border-zinc-200/80 dark:border-white/10'
-                    : 'bg-black/50 backdrop-blur-md text-white border-white/20'
-                }`}
+                className="w-10 h-10 rounded-full flex items-center justify-center border border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md text-zinc-900 dark:text-white shadow-sm focus:outline-none"
                 aria-label="Toggle mobile menu"
               >
                 {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -244,7 +210,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden text-zinc-900 dark:text-white overflow-y-auto"
+            className="fixed inset-0 z-30 pt-24 px-6 pb-8 bg-white/98 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between lg:hidden text-zinc-900 dark:text-white overflow-y-auto"
           >
             <div className="flex flex-col space-y-3 pt-4">
               <span className="text-[11px] uppercase tracking-widest text-purpo-purple font-semibold">
@@ -294,7 +260,7 @@ export default function Navbar() {
               >
                 Start Your Project
               </a>
-              <div className="text-center text-xs text-zinc-500 dark:text-zinc-400">
+              <div className="text-center text-xs text-zinc-600 dark:text-zinc-400">
                 27, Ijaoye Street, Jibowu, Yaba, Lagos • 08133802278
               </div>
             </div>
