@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50 dark:bg-black text-zinc-900 dark:text-white transition-colors">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#F7F8F3] dark:bg-black text-zinc-900 dark:text-white transition-colors">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purpo-purple/20 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-purpo-cyan/15 rounded-full blur-[130px] pointer-events-none" />
@@ -79,16 +79,17 @@ export default function AdminLoginPage() {
       >
         {/* Brand Logo & Title */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block relative w-16 h-16 mb-4 drop-shadow-[0_0_25px_rgba(94,96,206,0.6)]">
+          <Link href="/" className="inline-block relative h-12 w-48 mb-4 drop-shadow-[0_0_20px_rgba(157,78,221,0.5)]">
             <Image
-              src="/images/purpo-logo.png"
-              alt="PURPO"
+              src="/images/purpolens-logo.png"
+              alt="PURPOLENS"
               fill
               className="object-contain"
+              priority
             />
           </Link>
           <h1 className="font-display text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            PURPO Studio CMS
+            PURPOLENS Studio CMS
           </h1>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Restricted Admin Portal • Lagos, Nigeria
