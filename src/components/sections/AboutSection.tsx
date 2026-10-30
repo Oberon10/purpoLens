@@ -7,7 +7,7 @@ import { CheckCircle2, Compass, Eye, Target, Zap, MapPin } from 'lucide-react';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-28 scroll-mt-24 overflow-hidden bg-zinc-100/50 dark:bg-black/60 transition-colors">
+    <section id="about" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/60 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />
@@ -51,7 +51,7 @@ export default function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
               {/* Floating Overlay Badge: Location */}
-              <div className="absolute bottom-6 left-6 right-6 p-5 glass-panel rounded-2xl border border-white/20 dark:border-white/10 flex items-center justify-between text-white">
+              <div className="absolute bottom-6 left-6 right-6 p-5 bg-black/75 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-between text-white">
                 <div>
                   <div className="flex items-center space-x-2 text-purpo-cyan text-xs font-semibold uppercase tracking-wider mb-1">
                     <MapPin size={13} />

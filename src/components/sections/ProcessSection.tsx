@@ -74,7 +74,7 @@ export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="process" className="relative py-28 scroll-mt-24 overflow-hidden bg-zinc-100/50 dark:bg-black/40 transition-colors">
+    <section id="process" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/50 dark:bg-black/40 transition-colors">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purpo-purple/10 rounded-full blur-[150px] pointer-events-none" />
 

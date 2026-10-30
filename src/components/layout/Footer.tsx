@@ -57,7 +57,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-white dark:bg-black border-t border-zinc-200/80 dark:border-white/10 pt-20 pb-12 overflow-hidden text-zinc-600 dark:text-zinc-400 transition-colors">
+    <footer className="relative bg-[#F7F8F3] dark:bg-black border-t border-zinc-200/80 dark:border-white/10 pt-20 pb-12 overflow-hidden text-zinc-600 dark:text-zinc-400 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
 

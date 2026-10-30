@@ -19,7 +19,7 @@
   }
 
   html.light {
-    --background: #f8fafc;
+    --background: #F7F8F3;
     --foreground: #09090b;
     --card: #ffffff;
     --card-foreground: #09090b;
@@ -27,7 +27,7 @@
     --primary: #5E60CE;
     --primary-foreground: #ffffff;
     --secondary: #0096c7;
-    --muted: #f1f5f9;
+    --muted: #eeefe8;
     --muted-foreground: #475569;
     --accent: #7B2CBF;
   }
@@ -70,7 +70,7 @@ body {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d4d6cd;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -86,11 +86,11 @@ html.light ::-webkit-scrollbar-thumb {
 }
 
 html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(247, 248, 243, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
 }
 
 /* Glassmorphism cards */
@@ -102,10 +102,10 @@ html.light .glass-panel {
 }
 
 html.light .glass-card {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
 .glass-card:hover {
@@ -115,7 +115,7 @@ html.light .glass-card {
 
 html.light .glass-card:hover {
   border-color: rgba(94, 96, 206, 0.5);
-  box-shadow: 0 12px 35px -10px rgba(94, 96, 206, 0.2);
+  box-shadow: 0 12px 35px -10px rgba(94, 96, 206, 0.15);
 }
 
 /* Luxury gradients */

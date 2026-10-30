@@ -60,7 +60,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-28 scroll-mt-24 overflow-hidden bg-zinc-100/60 dark:bg-black/90 transition-colors">
+    <section id="contact" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/90 transition-colors">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purpo-purple/20 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-purpo-cyan/15 rounded-full blur-[140px] pointer-events-none" />
