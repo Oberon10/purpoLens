@@ -21,7 +21,7 @@ export default function WhatsAppButton() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="mb-3 p-3.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl shadow-2xl text-left max-w-xs text-zinc-900 dark:text-white"
+            className="mb-3 p-3.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl text-left max-w-xs text-zinc-900 dark:text-white"
           >
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-100 dark:border-white/10">
               <div className="flex items-center space-x-2">
@@ -48,25 +48,22 @@ export default function WhatsAppButton() {
       {/* Main WhatsApp Floating Button */}
       <div className="relative group flex items-center">
         {/* Hover Pill Label */}
-        <span className="hidden sm:inline-block mr-3 px-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 text-zinc-800 dark:text-white text-xs font-semibold shadow-lg border border-zinc-200 dark:border-white/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+        <span className="hidden sm:inline-block mr-3 px-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 text-zinc-800 dark:text-white text-xs font-semibold border border-zinc-200 dark:border-white/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
           Chat on WhatsApp
         </span>
-
-        {/* Ambient Glowing Halo */}
-        <span className="absolute right-0 -inset-1.5 rounded-full bg-[#25D366]/40 blur-lg group-hover:bg-[#25D366]/60 transition-all duration-300 animate-pulse-slow" />
 
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setShowTooltip(true)}
-          className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white shadow-[0_10px_30px_rgba(37,211,102,0.45)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-white/20"
+          className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
           aria-label="Chat with PURPO on WhatsApp"
         >
           {/* Official WhatsApp Logo SVG */}
           <svg
             viewBox="0 0 24 24"
-            className="w-8 h-8 sm:w-9 sm:h-9 fill-white drop-shadow-md"
+            className="w-8 h-8 sm:w-9 sm:h-9 fill-white"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
@@ -74,7 +71,7 @@ export default function WhatsAppButton() {
           </svg>
 
           {/* Active Online Indicator Dot */}
-          <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-md">
+          <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full flex items-center justify-center">
             <span className="w-2.5 h-2.5 bg-[#25D366] rounded-full animate-pulse" />
           </span>
         </a>
