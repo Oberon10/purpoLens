@@ -208,16 +208,34 @@ export default function AdminDashboardPage() {
     }
 
     setUploading(true);
-    let finalVideoUrl = editingVideo.video_url || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-    let finalThumbUrl = editingVideo.thumbnail_url || 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1600&q=80';
+    let finalVideoUrl = editingVideo.video_url?.trim() || '';
+    let finalThumbUrl = editingVideo.thumbnail_url?.trim() || '';
 
     if (videoFile) {
+      showToast('Uploading video file to server...', 'success');
       const url = await uploadMediaFile(videoFile, 'portfolio-videos');
-      if (url) finalVideoUrl = url;
+      if (url) {
+        finalVideoUrl = url;
+      } else {
+        showToast('Failed to upload video file. Please try again or provide a video URL.', 'error');
+        setUploading(false);
+        return;
+      }
     }
+
     if (thumbFile) {
       const url = await uploadMediaFile(thumbFile, 'portfolio-images');
       if (url) finalThumbUrl = url;
+    }
+
+    if (!finalVideoUrl) {
+      showToast('Please provide a video file or enter a valid video link (YouTube, Vimeo, or MP4)', 'error');
+      setUploading(false);
+      return;
+    }
+
+    if (!finalThumbUrl) {
+      finalThumbUrl = 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1600&q=80';
     }
 
     // Check 9 featured limit
@@ -243,7 +261,7 @@ export default function AdminDashboardPage() {
       setEditingVideo(null);
       setVideoFile(null);
       setThumbFile(null);
-      showToast('Video successfully saved!');
+      showToast('Video successfully uploaded and saved to portfolio!');
     } catch {
       showToast('Failed to save video', 'error');
     } finally {
@@ -1550,46 +1568,80 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
-                    Video URL or Upload File (Supabase Storage)
-                  </label>
-                  <input
-                    type="text"
-                    value={editingVideo?.video_url || ''}
-                    onChange={(e) =>
-                      setEditingVideo({ ...editingVideo, video_url: e.target.value })
-                    }
-                    placeholder="https://...mp4 or YouTube / Vimeo link"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple mb-2 shadow-sm"
-                  />
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
-                    className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold"
-                  />
+                {/* Video Upload or URL */}
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-200 dark:border-white/10 space-y-3">
+                  <div>
+                    <label className="block text-xs uppercase font-bold text-zinc-800 dark:text-zinc-200 mb-1">
+                      Option A: Upload Video File from Device (.mp4, .webm, .mov)
+                    </label>
+                    <input
+                      type="file"
+                      accept="video/mp4,video/webm,video/quicktime,video/*"
+                      onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
+                      className="w-full text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-purpo-purple file:text-white file:font-bold file:text-xs cursor-pointer"
+                    />
+                    {videoFile && (
+                      <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1.5 flex items-center space-x-1">
+                        <CheckCircle size={12} />
+                        <span>Ready to upload: {videoFile.name} ({(videoFile.size / (1024 * 1024)).toFixed(1)} MB)</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-zinc-200 dark:border-white/10"></div>
+                    <span className="flex-shrink mx-3 text-[10px] font-bold uppercase tracking-wider text-zinc-400">OR</span>
+                    <div className="flex-grow border-t border-zinc-200 dark:border-white/10"></div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs uppercase font-bold text-zinc-800 dark:text-zinc-200 mb-1">
+                      Option B: Paste Video Link (YouTube, Vimeo, or Direct MP4)
+                    </label>
+                    <input
+                      type="text"
+                      value={editingVideo?.video_url || ''}
+                      onChange={(e) =>
+                        setEditingVideo({ ...editingVideo, video_url: e.target.value })
+                      }
+                      placeholder="e.g. https://www.youtube.com/watch?v=... or https://...mp4"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
+                    />
+                    <p className="text-[10px] text-zinc-500 mt-1">
+                      Supports YouTube reels, Vimeo showcases, and direct MP4/WebM CDN streams.
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
-                    Thumbnail Image URL or Upload Image
-                  </label>
-                  <input
-                    type="text"
-                    value={editingVideo?.thumbnail_url || ''}
-                    onChange={(e) =>
-                      setEditingVideo({ ...editingVideo, thumbnail_url: e.target.value })
-                    }
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple mb-2 shadow-sm"
-                  />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setThumbFile(e.target.files?.[0] || null)}
-                    className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold"
-                  />
+                {/* Thumbnail Upload or URL */}
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-200 dark:border-white/10 space-y-3">
+                  <div>
+                    <label className="block text-xs uppercase font-bold text-zinc-800 dark:text-zinc-200 mb-1">
+                      Thumbnail Image (Upload File or Enter URL)
+                    </label>
+                    <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-2">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setThumbFile(e.target.files?.[0] || null)}
+                        className="text-xs text-zinc-600 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-purpo-purple/15 file:text-purpo-purple file:font-semibold cursor-pointer"
+                      />
+                      {thumbFile && (
+                        <span className="text-[11px] text-emerald-600 font-medium">
+                          Selected: {thumbFile.name}
+                        </span>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      value={editingVideo?.thumbnail_url || ''}
+                      onChange={(e) =>
+                        setEditingVideo({ ...editingVideo, thumbnail_url: e.target.value })
+                      }
+                      placeholder="Or enter image URL: https://images.unsplash.com/..."
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-purpo-purple shadow-sm"
+                    />
+                  </div>
                 </div>
 
                 <div>
