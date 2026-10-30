@@ -880,7 +880,7 @@ export default function AdminDashboardPage() {
                     `PURPO Creative Studio - Booking Confirmation #${b.id.slice(0, 8).toUpperCase()}`
                   );
                   const emailBody = encodeURIComponent(
-                    `Hello ${b.client_name},\n\nThank you for choosing PURPO for your ${b.service} production.\n\nWe have received your booking request for ${b.event_date ? b.event_date : 'your upcoming project'}.\n\nOur team has reviewed your details and we are thrilled to collaborate with you.\n\nNext Steps:\n- Location: ${b.location || 'Studio / To be confirmed'}\n- Budget Tier: ${b.budget || 'Custom'}\n\nPlease let us know if you have any questions or additional references.\n\nWarm regards,\nPURPO Creative Media House\nLagos, Nigeria\nHotline: 08133802278`
+                    `Hello ${b.client_name},\n\nThank you for choosing PURPO for your ${b.service} production.\n\nWe have received your booking request for ${b.event_date ? b.event_date : 'your upcoming project'}.\n\nOur team has reviewed your details and we are thrilled to collaborate with you.\n\nNext Steps:\n- Location: ${b.location || 'Studio / To be confirmed'}${b.budget || b.estimated_budget ? `\n- Budget: ${b.budget || b.estimated_budget}` : ''}\n\nPlease let us know if you have any questions or additional references.\n\nWarm regards,\nPURPO Creative Media House\nLagos, Nigeria\nHotline: 08133802278`
                   );
 
                   // WhatsApp message
@@ -961,8 +961,8 @@ export default function AdminDashboardPage() {
                             </div>
                           </div>
 
-                          {/* Event Meta: Date, Location, Budget */}
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                          {/* Event Meta: Date & Location */}
+                          <div className={`grid grid-cols-1 ${b.budget || b.estimated_budget ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-3 pt-2`}>
                             <div className="p-3 rounded-2xl bg-zinc-100/80 dark:bg-white/5 border border-zinc-200/60 dark:border-white/5 text-xs">
                               <div className="flex items-center space-x-1.5 text-zinc-500 mb-0.5">
                                 <Calendar size={13} className="text-purpo-purple" />
@@ -983,15 +983,17 @@ export default function AdminDashboardPage() {
                               </div>
                             </div>
 
-                            <div className="p-3 rounded-2xl bg-zinc-100/80 dark:bg-white/5 border border-zinc-200/60 dark:border-white/5 text-xs">
-                              <div className="flex items-center space-x-1.5 text-zinc-500 mb-0.5">
-                                <Wallet size={13} className="text-purpo-purple" />
-                                <span className="uppercase text-[10px] font-bold">Client Budget Tier</span>
+                            {(b.budget || b.estimated_budget) && (
+                              <div className="p-3 rounded-2xl bg-zinc-100/80 dark:bg-white/5 border border-zinc-200/60 dark:border-white/5 text-xs">
+                                <div className="flex items-center space-x-1.5 text-zinc-500 mb-0.5">
+                                  <Wallet size={13} className="text-purpo-purple" />
+                                  <span className="uppercase text-[10px] font-bold">Client Budget Tier</span>
+                                </div>
+                                <div className="font-bold text-emerald-600 dark:text-emerald-400">
+                                  {b.budget || b.estimated_budget}
+                                </div>
                               </div>
-                              <div className="font-bold text-emerald-600 dark:text-emerald-400">
-                                {b.budget || 'Custom Quote'}
-                              </div>
-                            </div>
+                            )}
                           </div>
 
                           {/* Message / Brief */}
