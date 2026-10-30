@@ -1,0 +1,16 @@
+[
+  {
+    "id": "22b77954-0383-4487-bf25-110d2d1f51dc",
+    "title": "nature",
+    "description": "luxury life",
+    "category": "Commercial",
+    "thumbnail_url": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1600&q=80",
+    "video_url": "https://vjs.zencdn.net/v/oceans.mp4",
+    "featured": true,
+    "order_index": 0,
+    "client_name": "james",
+    "duration": "01:30",
+    "created_at": "2026-10-30T06:33:37.805766+00:00"
+  }
+]
+
