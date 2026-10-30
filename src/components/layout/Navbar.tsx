@@ -98,49 +98,37 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
             ? 'py-3.5 glass-panel border-b border-zinc-200/80 dark:border-white/10 shadow-card backdrop-blur-md'
             : 'py-5 bg-gradient-to-b from-black/85 via-black/45 to-transparent backdrop-blur-xs'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Brand Logo & Name */}
+            {/* Brand Logo */}
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 group cursor-pointer focus:outline-none"
+              className="flex items-center group cursor-pointer focus:outline-none select-none py-0.5"
+              aria-label="PURPOLONS Home"
             >
-              <div className="relative w-10 h-10 transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(94,96,206,0.6)]">
+              <div className="relative h-9 sm:h-10 md:h-11 w-36 sm:w-44 md:w-48 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="/images/purpo-logo.png"
-                  alt="PURPO"
+                  src="/images/purpolens-logo.png"
+                  alt="PURPOLONS • Videography / Photography / Editing"
                   fill
-                  className="object-contain"
+                  sizes="(max-width: 640px) 144px, (max-width: 768px) 176px, 192px"
+                  className="object-contain object-left drop-shadow-[0_0_14px_rgba(157,78,221,0.35)] group-hover:drop-shadow-[0_0_22px_rgba(157,78,221,0.6)] transition-all duration-300"
                   priority
                 />
-              </div>
-              <div className="flex flex-col">
-                <span className={`font-display font-extrabold text-xl tracking-[0.2em] uppercase transition-colors group-hover:text-purpo-purple ${
-                  scrolled ? 'text-zinc-950 dark:text-white' : 'text-white'
-                }`}>
-                  PURPO
-                </span>
-                <span className={`text-[9px] uppercase tracking-widest font-medium transition-colors ${
-                  scrolled ? 'text-zinc-600 dark:text-zinc-400' : 'text-zinc-300'
-                }`}>
-                  Creative Agency • Lagos
-                </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className={`hidden lg:flex items-center space-x-1 px-3 py-1.5 rounded-full border transition-all duration-300 ${
-              scrolled
+            <nav className={`hidden lg:flex items-center space-x-1 px-3 py-1.5 rounded-full border transition-all duration-300 ${scrolled
                 ? 'border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 backdrop-blur-md shadow-sm'
                 : 'border-white/15 bg-black/60 backdrop-blur-md shadow-md'
-            }`}>
+              }`}>
               {NAV_LINKS.map((link) => {
                 const targetKey = link.href.substring(1);
                 const isActive = activeSection === targetKey;
@@ -149,15 +137,14 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className={`relative text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full font-medium transition-all duration-200 ${
-                      isActive
+                    className={`relative text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full font-medium transition-all duration-200 ${isActive
                         ? scrolled
                           ? 'text-purpo-purple dark:text-purpo-cyan bg-purpo-purple/10 dark:bg-white/10 font-bold shadow-sm'
                           : 'text-purpo-cyan bg-white/15 font-bold shadow-sm'
                         : scrolled
                           ? 'text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5'
                           : 'text-zinc-200 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     {link.label}
                     {isActive && (
@@ -173,11 +160,10 @@ export default function Navbar() {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer border ${
-                  scrolled
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer border ${scrolled
                     ? 'border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white shadow-sm'
                     : 'border-white/15 bg-black/60 text-zinc-200 hover:text-white shadow-md'
-                } hover:border-purpo-purple`}
+                  } hover:border-purpo-purple`}
                 aria-label="Toggle Theme"
                 title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
@@ -191,11 +177,10 @@ export default function Navbar() {
               {/* Admin Dashboard shortcut */}
               <Link
                 href="/admin"
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors border ${
-                  scrolled
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors border ${scrolled
                     ? 'border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 text-zinc-600 dark:text-zinc-400 hover:text-purpo-purple shadow-sm'
                     : 'border-white/15 bg-black/60 text-zinc-300 hover:text-white hover:border-purpo-purple shadow-md'
-                }`}
+                  }`}
                 title="Admin Dashboard"
               >
                 <Shield size={16} />
@@ -216,22 +201,20 @@ export default function Navbar() {
             <div className="flex items-center space-x-2 lg:hidden">
               <button
                 onClick={toggleTheme}
-                className={`w-9 h-9 rounded-full flex items-center justify-center border shadow-sm ${
-                  scrolled
+                className={`w-9 h-9 rounded-full flex items-center justify-center border shadow-sm ${scrolled
                     ? 'border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 text-zinc-700 dark:text-zinc-300'
                     : 'border-white/15 bg-black/60 text-zinc-200'
-                }`}
+                  }`}
                 aria-label="Toggle Theme"
               >
                 {theme === 'dark' ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-purpo-purple" />}
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center border shadow-sm focus:outline-none ${
-                  scrolled
+                className={`w-10 h-10 rounded-full flex items-center justify-center border shadow-sm focus:outline-none ${scrolled
                     ? 'border-zinc-200/90 dark:border-white/10 bg-white/90 dark:bg-black/60 text-zinc-900 dark:text-white'
                     : 'border-white/15 bg-black/60 text-white'
-                }`}
+                  }`}
                 aria-label="Toggle mobile menu"
               >
                 {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -266,11 +249,10 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.04 }}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className={`text-2xl font-display font-medium py-1 transition-colors flex items-center justify-between ${
-                      isActive
+                    className={`text-2xl font-display font-medium py-1 transition-colors flex items-center justify-between ${isActive
                         ? 'text-purpo-purple dark:text-purpo-cyan font-bold'
                         : 'text-zinc-800 dark:text-white/90 hover:text-purpo-purple dark:hover:text-purpo-cyan'
-                    }`}
+                      }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (

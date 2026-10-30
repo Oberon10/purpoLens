@@ -67,22 +67,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-zinc-200/80 dark:border-white/10">
           {/* Brand Info (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            <Link href="/" className="flex items-center space-x-3 group w-fit">
-              <div className="relative w-12 h-12 drop-shadow-[0_0_20px_rgba(94,96,206,0.6)]">
+            <Link href="/" className="flex items-center group w-fit cursor-pointer select-none" aria-label="PURPOLONS Home">
+              <div className="relative h-12 sm:h-14 w-48 sm:w-56 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="/images/purpo-logo.png"
-                  alt="PURPO"
+                  src="/images/purpolens-logo.png"
+                  alt="PURPOLONS • Videography / Photography / Editing"
                   fill
-                  className="object-contain"
+                  sizes="(max-width: 640px) 192px, 224px"
+                  className="object-contain object-left drop-shadow-[0_0_16px_rgba(157,78,221,0.35)] group-hover:drop-shadow-[0_0_24px_rgba(157,78,221,0.6)] transition-all duration-300"
                 />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-black text-2xl tracking-[0.2em] uppercase text-zinc-900 dark:text-white group-hover:text-purpo-purple transition-colors">
-                  PURPO
-                </span>
-                <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
-                  Creative Agency • Lagos
-                </span>
               </div>
             </Link>
 
