@@ -7,14 +7,14 @@ import { CheckCircle2, Compass, Eye, Target, Zap, MapPin } from 'lucide-react';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/60 transition-colors">
+    <section id="about" className="relative py-20 sm:py-24 scroll-mt-6 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/60 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-12 sm:mb-14">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple dark:text-purpo-cyan mb-4">
             <Compass size={13} />
             <span>Who We Are</span>

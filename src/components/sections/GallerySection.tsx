@@ -29,14 +29,14 @@ export default function GallerySection({ items }: GallerySectionProps) {
   }, [items, selectedCategory]);
 
   return (
-    <section id="gallery" className="relative py-28 scroll-mt-24 overflow-hidden">
+    <section id="gallery" className="relative py-20 sm:py-24 scroll-mt-6 overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-purpo-purple/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-purpo-cyan/10 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple dark:text-purpo-cyan mb-4">
               <Camera size={13} />

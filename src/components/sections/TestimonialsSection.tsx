@@ -35,13 +35,13 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   if (!current) return null;
 
   return (
-    <section id="testimonials" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/50 dark:bg-black/60 transition-colors">
+    <section id="testimonials" className="relative py-20 sm:py-24 scroll-mt-6 overflow-hidden bg-[#eeefe8]/50 dark:bg-black/60 transition-colors">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-purpo-purple/15 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple dark:text-purpo-cyan mb-4">
             <MessageSquare size={13} />
             <span>Client Endorsements</span>

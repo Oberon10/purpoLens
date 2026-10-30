@@ -52,7 +52,7 @@ const INSTA_POSTS = [
 
 export default function InstagramSection() {
   return (
-    <section id="instagram" className="relative py-24 scroll-mt-24 overflow-hidden border-t border-zinc-200/80 dark:border-white/5 bg-[#eeefe8]/40 dark:bg-black/40 transition-colors">
+    <section id="instagram" className="relative py-20 sm:py-24 scroll-mt-6 overflow-hidden border-t border-zinc-200/80 dark:border-white/5 bg-[#eeefe8]/40 dark:bg-black/40 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
           <div>

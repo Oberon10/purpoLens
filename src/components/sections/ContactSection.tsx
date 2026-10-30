@@ -60,14 +60,14 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-28 scroll-mt-24 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/90 transition-colors">
+    <section id="contact" className="relative py-20 sm:py-24 scroll-mt-6 overflow-hidden bg-[#eeefe8]/60 dark:bg-black/90 transition-colors">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purpo-purple/20 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-purpo-cyan/15 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-card border border-zinc-200/80 dark:border-white/10 text-xs font-semibold tracking-widest uppercase text-purpo-purple mb-4">
             <Mail size={13} />
             <span>Initiate Collaboration</span>

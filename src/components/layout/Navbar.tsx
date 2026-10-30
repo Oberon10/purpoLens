@@ -29,6 +29,12 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
 
+      // Edge case: if near bottom of page, highlight Contact
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 70) {
+        setActiveSection('contact');
+        return;
+      }
+
       // Scroll spy for highlighting active section
       const sectionIds = ['about', 'services', 'work', 'gallery', 'process', 'testimonials', 'contact'];
       const scrollPosition = window.scrollY + 140;
@@ -63,10 +69,15 @@ export default function Navbar() {
       const targetId = href.substring(1);
       const el = document.getElementById(targetId);
       if (el) {
-        const navOffset = 80;
-        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navOffset;
+        // Accurately locate the content header inside the section
+        const content = el.querySelector('.max-w-7xl') || el.querySelector('h2') || el;
+        const contentTop = content.getBoundingClientRect().top + window.pageYOffset;
+        // Sticky navbar is ~70px high; provide a clean 18px clearance so the header sits right below it
+        const navClearance = 88;
+        const targetY = Math.max(0, contentTop - navClearance);
+
         window.scrollTo({
-          top: Math.max(0, targetY),
+          top: targetY,
           behavior: 'smooth',
         });
         setMobileMenuOpen(false);

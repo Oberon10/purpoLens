@@ -13,10 +13,12 @@ export default function HeroSection({ onOpenReel }: HeroSectionProps) {
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const navOffset = 80;
-      const targetY = el.getBoundingClientRect().top + window.pageYOffset - navOffset;
+      const content = el.querySelector('.max-w-7xl') || el.querySelector('h2') || el;
+      const contentTop = content.getBoundingClientRect().top + window.pageYOffset;
+      const navClearance = 88;
+      const targetY = Math.max(0, contentTop - navClearance);
       window.scrollTo({
-        top: Math.max(0, targetY),
+        top: targetY,
         behavior: 'smooth',
       });
       window.history.pushState(null, '', `#${id}`);
