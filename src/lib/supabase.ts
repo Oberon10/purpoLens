@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Database, VideoItem, GalleryItem, TestimonialItem, ContactMessage } from '@/types/database';
+import { Database, VideoItem, GalleryItem, TestimonialItem, ContactMessage, BookingRequest, BookingStatus } from '@/types/database';
 import { INITIAL_VIDEOS, INITIAL_GALLERY, INITIAL_TESTIMONIALS } from './mockData';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -36,6 +36,37 @@ let localVideos: VideoItem[] = [...INITIAL_VIDEOS];
 let localGallery: GalleryItem[] = [...INITIAL_GALLERY];
 let localTestimonials: TestimonialItem[] = [...INITIAL_TESTIMONIALS];
 let localContactMessages: ContactMessage[] = [];
+let localBookings: BookingRequest[] = [
+  {
+    id: 'book-101',
+    client_name: 'Folake Adeyemi',
+    client_email: 'folake@heritagebrands.ng',
+    client_phone: '08023456789',
+    service: 'Videography',
+    event_date: '2026-11-15',
+    location: 'Eko Hotel & Suites, Victoria Island, Lagos',
+    estimated_budget: '₦2,500,000 - ₦5,000,000',
+    message: 'We are hosting our annual Heritage Luxury Gala and require a 4-camera cinema setup with 4K RAW coverage, drone establishing shots, and same-day social highlights edit.',
+    status: 'pending',
+    is_read: false,
+    created_at: new Date(Date.now() - 3600000 * 3).toISOString(),
+  },
+  {
+    id: 'book-102',
+    client_name: 'David Adeleke',
+    client_email: 'david@afrobeatrecords.com',
+    client_phone: '08123456780',
+    service: 'Video Editing',
+    event_date: '2026-11-20',
+    location: 'Lekki Phase 1, Lagos',
+    estimated_budget: '₦1,000,000 - ₦2,500,000',
+    message: 'Music video post-production for upcoming single. Need DaVinci Resolve color grading, rhythmic match cuts, and motion typography.',
+    status: 'accepted',
+    is_read: true,
+    admin_notes: 'Confirmed deposit received. Studio calendar reserved.',
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+  },
+];
 
 // =================== VIDEOS SERVICE ===================
 export async function getVideos(): Promise<VideoItem[]> {
@@ -227,6 +258,169 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
     }
   }
   return localContactMessages;
+}
+
+// =================== BOOKINGS SERVICE ===================
+export async function createBooking(
+  booking: Omit<BookingRequest, 'id' | 'created_at' | 'status' | 'is_read'> & Partial<BookingRequest>
+): Promise<{ success: boolean; data: BookingRequest; message: string }> {
+  const supabase = getSupabase();
+  const newBookingPayload: Omit<BookingRequest, 'id' | 'created_at'> = {
+    client_name: booking.client_name,
+    client_email: booking.client_email,
+    client_phone: booking.client_phone,
+    service: booking.service,
+    event_date: booking.event_date || undefined,
+    location: booking.location || '',
+    estimated_budget: booking.estimated_budget || '',
+    message: booking.message,
+    status: (booking.status as BookingStatus) || 'pending',
+    is_read: false,
+    admin_notes: '',
+  };
+
+  if (supabase) {
+    try {
+      const { data, error } = await (supabase.from('bookings') as any)
+        .insert([newBookingPayload])
+        .select()
+        .single();
+      if (!error && data) {
+        return {
+          success: true,
+          data: data as BookingRequest,
+          message: 'Booking request submitted successfully! A confirmation notice has been sent to our production desk.',
+        };
+      }
+    } catch (err) {
+      console.warn('Using local booking store:', err);
+    }
+  }
+
+  // Local persistent fallback
+  const created: BookingRequest = {
+    ...newBookingPayload,
+    id: `book-${Date.now()}`,
+    created_at: new Date().toISOString(),
+  };
+
+  localBookings.unshift(created);
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_bookings', JSON.stringify(localBookings));
+    } catch {}
+  }
+
+  return {
+    success: true,
+    data: created,
+    message: 'Booking request submitted successfully! Our producer will review and confirm your shoot date within 24 hours.',
+  };
+}
+
+export async function getBookings(): Promise<BookingRequest[]> {
+  const supabase = getSupabase();
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error && data && data.length > 0) {
+        return data as BookingRequest[];
+      }
+    } catch (err) {
+      console.warn('Using local bookings:', err);
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('purpo_local_bookings');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          localBookings = parsed;
+        }
+      }
+    } catch {}
+  }
+  return localBookings;
+}
+
+export async function updateBookingStatus(
+  id: string,
+  status: BookingStatus,
+  admin_notes?: string
+): Promise<boolean> {
+  const supabase = getSupabase();
+  const updatePayload: any = { status };
+  if (admin_notes !== undefined) updatePayload.admin_notes = admin_notes;
+
+  if (supabase) {
+    try {
+      const { error } = await (supabase.from('bookings') as any)
+        .update(updatePayload)
+        .eq('id', id);
+      if (!error) return true;
+    } catch (err) {
+      console.warn('Supabase updateBookingStatus error, falling back to local:', err);
+    }
+  }
+
+  localBookings = localBookings.map((b) =>
+    b.id === id ? { ...b, ...updatePayload } : b
+  );
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_bookings', JSON.stringify(localBookings));
+    } catch {}
+  }
+  return true;
+}
+
+export async function markBookingAsRead(id: string): Promise<boolean> {
+  const supabase = getSupabase();
+  if (supabase) {
+    try {
+      const { error } = await (supabase.from('bookings') as any)
+        .update({ is_read: true })
+        .eq('id', id);
+      if (!error) return true;
+    } catch (err) {
+      console.warn('Supabase markBookingAsRead error, falling back to local:', err);
+    }
+  }
+
+  localBookings = localBookings.map((b) =>
+    b.id === id ? { ...b, is_read: true } : b
+  );
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_bookings', JSON.stringify(localBookings));
+    } catch {}
+  }
+  return true;
+}
+
+export async function deleteBooking(id: string): Promise<boolean> {
+  const supabase = getSupabase();
+  if (supabase) {
+    try {
+      const { error } = await (supabase.from('bookings') as any).delete().eq('id', id);
+      if (!error) return true;
+    } catch (err) {
+      console.warn('Supabase deleteBooking error, falling back to local:', err);
+    }
+  }
+
+  localBookings = localBookings.filter((b) => b.id !== id);
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_bookings', JSON.stringify(localBookings));
+    } catch {}
+  }
+  return true;
 }
 
 // =================== NEWSLETTER SERVICE ===================

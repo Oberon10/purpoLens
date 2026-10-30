@@ -63,6 +63,26 @@ export interface ContactMessage {
   status?: 'unread' | 'read' | 'replied';
 }
 
+export type BookingStatus = 'pending' | 'accepted' | 'declined' | 'completed';
+
+export interface BookingRequest {
+  id: string;
+  client_name: string;
+  client_email: string;
+  client_phone: string;
+  service: ServiceType | string;
+  event_date?: string;
+  location?: string;
+  estimated_budget?: string;
+  budget?: string;
+  message: string;
+  status: BookingStatus;
+  is_read: boolean;
+  read?: boolean;
+  admin_notes?: string;
+  created_at: string;
+}
+
 export interface NewsletterSubscriber {
   id: string;
   email: string;
@@ -91,6 +111,11 @@ export type Database = {
         Row: ContactMessage;
         Insert: Omit<ContactMessage, 'id' | 'created_at'> & { id?: string; created_at?: string };
         Update: Partial<ContactMessage>;
+      };
+      bookings: {
+        Row: BookingRequest;
+        Insert: Omit<BookingRequest, 'id' | 'created_at'> & { id?: string; created_at?: string };
+        Update: Partial<BookingRequest>;
       };
       newsletter_subscribers: {
         Row: NewsletterSubscriber;

@@ -55,7 +55,24 @@ CREATE TABLE IF NOT EXISTS public.contact_messages (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 5. NEWSLETTER SUBSCRIBERS TABLE
+-- 5. BOOKINGS TABLE (PURPOLENS Client Bookings)
+CREATE TABLE IF NOT EXISTS public.bookings (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    client_name TEXT NOT NULL,
+    client_email TEXT NOT NULL,
+    client_phone TEXT NOT NULL,
+    service TEXT NOT NULL,
+    event_date DATE,
+    location TEXT,
+    estimated_budget TEXT,
+    message TEXT NOT NULL,
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'declined', 'completed')),
+    is_read BOOLEAN DEFAULT false,
+    admin_notes TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 6. NEWSLETTER SUBSCRIBERS TABLE
 CREATE TABLE IF NOT EXISTS public.newsletter_subscribers (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email TEXT NOT NULL UNIQUE,
@@ -67,6 +84,7 @@ ALTER TABLE public.videos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.gallery ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 
 -- POLICIES: PUBLIC ACCESS
@@ -80,8 +98,11 @@ CREATE POLICY "Allow public read access on gallery" ON public.gallery
 CREATE POLICY "Allow public read access on testimonials" ON public.testimonials
     FOR SELECT USING (true);
 
--- Anyone can submit a contact message or subscribe to newsletter
+-- Anyone can submit a contact message, booking request, or subscribe to newsletter
 CREATE POLICY "Allow public insert on contact_messages" ON public.contact_messages
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow public insert on bookings" ON public.bookings
     FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Allow public insert on newsletter_subscribers" ON public.newsletter_subscribers
@@ -99,6 +120,9 @@ CREATE POLICY "Allow full access for authenticated admins on testimonials" ON pu
     FOR ALL USING (auth.role() = 'authenticated');
 
 CREATE POLICY "Allow full access for authenticated admins on contact_messages" ON public.contact_messages
+    FOR ALL USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Allow full access for authenticated admins on bookings" ON public.bookings
     FOR ALL USING (auth.role() = 'authenticated');
 
 CREATE POLICY "Allow full access for authenticated admins on newsletter_subscribers" ON public.newsletter_subscribers
