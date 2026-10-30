@@ -89,7 +89,7 @@ export default function AdminLoginPage() {
             />
           </Link>
           <h1 className="font-display text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            PURPOLENS Studio CMS
+            Sign In
           </h1>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Restricted Admin Portal • Lagos, Nigeria
