@@ -13,7 +13,6 @@ import {
   Sparkles,
   Calendar,
   Compass,
-  Wallet,
   CalendarCheck,
   ArrowRight,
 } from 'lucide-react';
@@ -28,15 +27,6 @@ const SERVICES: ServiceType[] = [
   'Brand Strategy & Consulting',
 ];
 
-const BUDGET_OPTIONS = [
-  'Under ₦300,000',
-  '₦300,000 - ₦700,000',
-  '₦700,000 - ₦1,500,000',
-  '₦1,500,000 - ₦3,000,000',
-  '₦3,000,000+ (Premium / Commercial)',
-  'Flexible / Open to Quote',
-];
-
 export default function ContactSection() {
   const [formType, setFormType] = useState<'booking' | 'inquiry'>('booking');
 
@@ -48,7 +38,6 @@ export default function ContactSection() {
     service: 'Videography' as ServiceType,
     event_date: '',
     location: '',
-    budget: '₦700,000 - ₦1,500,000',
     message: '',
   });
 
@@ -140,7 +129,6 @@ export default function ContactSection() {
         service: 'Videography',
         event_date: '',
         location: '',
-        budget: '₦700,000 - ₦1,500,000',
         message: '',
       });
     } catch (err: any) {
@@ -597,26 +585,6 @@ export default function ContactSection() {
                         className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm transition-colors"
                       />
                     </div>
-                  </div>
-
-                  {/* Budget Selector */}
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-1.5 flex items-center space-x-1.5">
-                      <Wallet size={13} className="text-purpo-purple" />
-                      <span>Estimated Budget Range</span>
-                    </label>
-                    <select
-                      name="budget"
-                      value={bookingData.budget}
-                      onChange={handleBookingChange}
-                      className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-purpo-surface border border-zinc-300 dark:border-white/10 focus:border-purpo-purple focus:outline-none text-sm text-zinc-900 dark:text-white shadow-sm transition-colors cursor-pointer"
-                    >
-                      {BUDGET_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt} className="bg-white text-zinc-900 dark:bg-purpo-card dark:text-white">
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
                   </div>
 
                   {/* Message / Brief */}
