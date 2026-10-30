@@ -52,9 +52,13 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/images/purpo-logo.png",
-    shortcut: "/images/purpo-logo.png",
-    apple: "/images/purpo-logo.png",
+    icon: [
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     type: "website",
@@ -66,7 +70,7 @@ export const metadata: Metadata = {
       "World-class Videography, Editing, Content Creation, and Brand Strategy based in Yaba, Lagos, Nigeria.",
     images: [
       {
-        url: "/images/purpo-logo.png",
+        url: "/images/purpolens-logo.png",
         width: 1200,
         height: 630,
         alt: "PURPO Creative Agency",
@@ -78,7 +82,7 @@ export const metadata: Metadata = {
     title: "PURPO | Transforming Stories Into Powerful Digital Experiences",
     description:
       "World-class Videography, Editing, Content Creation, and Brand Strategy based in Yaba, Lagos, Nigeria.",
-    images: ["/images/purpo-logo.png"],
+    images: ["/images/purpolens-logo.png"],
     creator: "@purpolens",
   },
   robots: {
@@ -102,7 +106,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
-        <link rel="icon" href="/images/purpo-logo.png" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased bg-slate-50 text-zinc-900 dark:bg-black dark:text-white min-h-screen selection:bg-purpo-purple selection:text-white transition-colors duration-300`}>
         <JsonLd />
