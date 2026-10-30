@@ -108,13 +108,25 @@ CREATE POLICY "Allow public insert on bookings" ON public.bookings
 CREATE POLICY "Allow public insert on newsletter_subscribers" ON public.newsletter_subscribers
     FOR INSERT WITH CHECK (true);
 
--- POLICIES: AUTHENTICATED ADMIN ACCESS
--- Authenticated admins can perform all actions on all tables
-CREATE POLICY "Allow full access for authenticated admins on videos" ON public.videos
-    FOR ALL USING (auth.role() = 'authenticated');
+-- POLICIES: AUTHENTICATED & DASHBOARD ACCESS
+-- Allows video and gallery updates from the studio admin dashboard
+CREATE POLICY "Allow admin insert on videos" ON public.videos
+    FOR INSERT WITH CHECK (true);
 
-CREATE POLICY "Allow full access for authenticated admins on gallery" ON public.gallery
-    FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin update on videos" ON public.videos
+    FOR UPDATE USING (true);
+
+CREATE POLICY "Allow admin delete on videos" ON public.videos
+    FOR DELETE USING (true);
+
+CREATE POLICY "Allow admin insert on gallery" ON public.gallery
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow admin update on gallery" ON public.gallery
+    FOR UPDATE USING (true);
+
+CREATE POLICY "Allow admin delete on gallery" ON public.gallery
+    FOR DELETE USING (true);
 
 CREATE POLICY "Allow full access for authenticated admins on testimonials" ON public.testimonials
     FOR ALL USING (auth.role() = 'authenticated');

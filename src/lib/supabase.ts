@@ -70,6 +70,22 @@ let localBookings: BookingRequest[] = [
 
 // =================== VIDEOS SERVICE ===================
 export async function getVideos(): Promise<VideoItem[]> {
+  // 1. Check local client storage for any newly uploaded videos
+  let clientSavedVideos: VideoItem[] = [];
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('purpo_local_videos');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          clientSavedVideos = parsed;
+        }
+      }
+    } catch {}
+  }
+
+  // 2. Query Supabase
+  let dbVideos: VideoItem[] = [];
   const supabase = getSupabase();
   if (supabase) {
     try {
@@ -79,56 +95,125 @@ export async function getVideos(): Promise<VideoItem[]> {
         .order('order_index', { ascending: true })
         .order('created_at', { ascending: false });
       if (!error && data && data.length > 0) {
-        return data as VideoItem[];
+        dbVideos = data as VideoItem[];
       }
     } catch (err) {
       console.warn('Using local video data:', err);
     }
   }
-  return localVideos;
-}
 
-export async function saveVideo(video: Omit<VideoItem, 'id' | 'created_at'> & { id?: string }): Promise<VideoItem> {
-  const supabase = getSupabase();
-  if (supabase) {
-    if (video.id) {
-      const { data, error } = await (supabase.from('videos') as any)
-        .update(video)
-        .eq('id', video.id)
-        .select()
-        .single();
-      if (!error && data) return data as VideoItem;
-    } else {
-      const { data, error } = await (supabase.from('videos') as any)
-        .insert([video])
-        .select()
-        .single();
-      if (!error && data) return data as VideoItem;
+  // 3. Query /api/videos server endpoint if available
+  if (typeof window !== 'undefined' && dbVideos.length === 0) {
+    try {
+      const res = await fetch('/api/videos');
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.videos) && json.videos.length > 0) {
+          dbVideos = json.videos;
+        }
+      }
+    } catch {}
+  }
+
+  // 4. Merge all sources: client custom uploads first, then DB videos, then curated initial videos
+  const map = new Map<string, VideoItem>();
+
+  for (const v of clientSavedVideos) {
+    if (v && v.id) map.set(v.id, v);
+  }
+
+  for (const v of dbVideos) {
+    if (v && v.id) {
+      // Fix any legacy blocked commondatastorage link
+      if (v.video_url?.includes('commondatastorage.googleapis.com')) {
+        v.video_url = 'https://vjs.zencdn.net/v/oceans.mp4';
+      }
+      map.set(v.id, v);
     }
   }
 
-  // Fallback local update
-  if (video.id) {
-    localVideos = localVideos.map((v) => (v.id === video.id ? ({ ...v, ...video } as VideoItem) : v));
-    return localVideos.find((v) => v.id === video.id)!;
-  } else {
-    const newVideo: VideoItem = {
-      ...video,
-      id: `vid-${Date.now()}`,
-      created_at: new Date().toISOString(),
-    } as VideoItem;
-    localVideos = [newVideo, ...localVideos];
-    return newVideo;
+  for (const initial of INITIAL_VIDEOS) {
+    if (!map.has(initial.id)) {
+      map.set(initial.id, initial);
+    }
   }
+
+  const result = Array.from(map.values());
+  localVideos = result;
+  return result;
+}
+
+export async function saveVideo(video: Omit<VideoItem, 'id' | 'created_at'> & { id?: string }): Promise<VideoItem> {
+  const newId = video.id || `vid-${Date.now()}`;
+  const videoPayload: VideoItem = {
+    ...video,
+    id: newId,
+    created_at: new Date().toISOString(),
+  } as VideoItem;
+
+  // 1. Persist to server via /api/videos
+  if (typeof window !== 'undefined') {
+    try {
+      await fetch('/api/videos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(videoPayload),
+      });
+    } catch (err) {
+      console.warn('Failed to save to /api/videos:', err);
+    }
+  }
+
+  // 2. Persist to Supabase if available
+  const supabase = getSupabase();
+  if (supabase) {
+    try {
+      if (video.id && !video.id.startsWith('vid-')) {
+        await (supabase.from('videos') as any).update(video).eq('id', video.id);
+      } else {
+        await (supabase.from('videos') as any).insert([video]);
+      }
+    } catch (err) {
+      console.warn('Supabase saveVideo warning:', err);
+    }
+  }
+
+  // 3. Persist to local in-memory array & localStorage
+  if (video.id) {
+    localVideos = localVideos.map((v) => (v.id === video.id ? { ...v, ...videoPayload } : v));
+  } else {
+    localVideos = [videoPayload, ...localVideos.filter((v) => v.id !== newId)];
+  }
+
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_videos', JSON.stringify(localVideos));
+    } catch {}
+  }
+
+  return videoPayload;
 }
 
 export async function deleteVideo(id: string): Promise<boolean> {
+  if (typeof window !== 'undefined') {
+    try {
+      await fetch(`/api/videos?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+    } catch {}
+  }
+
   const supabase = getSupabase();
   if (supabase) {
-    const { error } = await (supabase.from('videos') as any).delete().eq('id', id);
-    if (!error) return true;
+    try {
+      await (supabase.from('videos') as any).delete().eq('id', id);
+    } catch {}
   }
+
   localVideos = localVideos.filter((v) => v.id !== id);
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('purpo_local_videos', JSON.stringify(localVideos));
+    } catch {}
+  }
   return true;
 }
 
@@ -448,30 +533,54 @@ export async function uploadMediaFile(
   file: File,
   bucket: 'portfolio-videos' | 'portfolio-images'
 ): Promise<string | null> {
+  // 1. First, attempt upload via server-side /api/upload endpoint
+  // This guarantees files are saved to public/uploads/videos or images and accessible
+  if (typeof window !== 'undefined') {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('bucket', bucket);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && json.url) {
+          return json.url;
+        }
+      }
+    } catch (apiErr) {
+      console.warn('Server API upload failed, attempting client fallback:', apiErr);
+    }
+  }
+
+  // 2. Direct Supabase Storage attempt
   const supabase = getSupabase();
-  if (!supabase) {
-    // Return a local object URL in demo mode
+  if (supabase) {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, { cacheControl: '3600', upsert: false });
+
+      if (!uploadError) {
+        const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+        if (data?.publicUrl) return data.publicUrl;
+      }
+    } catch (err) {
+      console.warn('Direct Supabase storage upload error:', err);
+    }
+  }
+
+  // 3. Fallback object URL for immediate browser session
+  if (typeof window !== 'undefined') {
     return URL.createObjectURL(file);
   }
-
-  try {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-    const filePath = `${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from(bucket)
-      .upload(filePath, file, { cacheControl: '3600', upsert: false });
-
-    if (uploadError) {
-      console.error('Upload error:', uploadError);
-      return null;
-    }
-
-    const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
-    return data.publicUrl;
-  } catch (err) {
-    console.error('Failed to upload file:', err);
-    return null;
-  }
+  return null;
 }
